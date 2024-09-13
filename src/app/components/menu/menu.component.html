@@ -1,0 +1,7 @@
+<nav>
+    <button routerLink="/home" routerLinkActive="active-route" >Home</button>
+    @if(!authService.IsLoggedIn()){
+        <button routerLink="/login" routerLinkActive="active-route" >Iniciar sesión</button>
+        <button routerLink="/signup" routerLinkActive="active-route" >Registrarse</button>
+    }
+</nav>

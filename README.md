@@ -26,8 +26,8 @@ ng serve --disable-host-check
 
 ## Crear Componente
 ```bash
-ng generate component nombre-del-componente
-ng generate component componentes/nombre-del-componente
+ng generate component nombre-del-componente --stand-alone=true
+ng generate component componentes/nombre-del-componente --stand-alone=true
 ```
 
 ## Compilar aplicación
