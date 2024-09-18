@@ -1,24 +1,38 @@
-<h1>{{ title }}</h1>
-<!-- Valida si el cliente esta logueado con el metodo IsLoggedIn y muestra un mensaje -->
+@if (IsLoggedIn()) {
+
+}
+@else {
+    <div id="unlogged_wrapper">
+        <div id="img_container">
+            <img src="assets/images/gamer-zone.png">
+        </div>
+        <div id="start_container">
+            <div id="text">
+                <h1>Sala de Juegos</h1>
+                <p>Diversión asegurada.</p>
+            </div>
+            <button>Comenzá ahora</button>
+        </div>
+    </div>
+}
+
 
 <!-- El usuario se encuentra registrado -->
 @if (IsLoggedIn()) {
-    <h2>Lograste acceder a {{ appName }}</h2>
+    <!-- <h2>Lograste acceder a {{ appName }}</h2>
     <section>
         <h3>Seccion en construcción</h3>
-        <!-- ejecuta el metodo -->
         <button (click)="Logout()">Cerrar sessión</button>
-    </section>
+    </section> -->
 }
 <!-- El usuario no se encuentra registrado -->
-@else {
+<!-- @else {
     <section>
         <h2>Crea una cuenta</h2>
-        <!-- cambiar ruta con sign up -->
         <button routerLink="/signup" routerLinkActive="active-route">Crear cuenta</button>
     </section>
     <section>
         <h2>Inicia sesión con tu cuenta</h2>
         <button routerLink="/login" routerLinkActive="active-route">Iniciar sesión</button>
     </section>
-}
+} -->

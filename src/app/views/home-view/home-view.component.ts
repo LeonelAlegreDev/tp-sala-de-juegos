@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './home-view.component.css'
 })
 export class HomeViewComponent {
-  title: string = 'Bienvenido a la sala de juegos!';
+  title: string = 'Comenzá a jugar ahora!';
   appName: string = 'Sala de Juegos';
 
   constructor(private authService: AuthService) {}

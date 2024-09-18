@@ -1,7 +1,12 @@
 <nav>
-    <button routerLink="/home" routerLinkActive="active-route" >Home</button>
+    <input id="home" type="button" routerLink="/home" routerLinkActive="active-route">
+    <label for="home">Home</label>
+
     @if(!authService.IsLoggedIn()){
-        <button routerLink="/login" routerLinkActive="active-route" >Iniciar sesión</button>
-        <button routerLink="/signup" routerLinkActive="active-route" >Registrarse</button>
+        <input id="login" type="button" routerLink="/login" routerLinkActive="active-route" >
+        <label for="login">Iniciar sesión</label>
+
+        <input id="signup" type="button" routerLink="/signup" routerLinkActive="active-route" >
+        <label for="signup">Crear cuenta</label>
     }
 </nav>

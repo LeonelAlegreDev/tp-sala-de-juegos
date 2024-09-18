@@ -67,3 +67,34 @@ firebase init
 ```bash
 firebase deploy --only hosting
 ```
+
+## Estilos con Bootstrap
+### Instalar los paquetes de Bootstrap para Angular
+```bash
+ng add @ng-bootstrap/ng-bootstrap
+```
+
+### Importacion de Bootstrap en Angular Model
+```typescript
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
+@NgModule({
+  imports: [NgbPaginationModule, NgbAlertModule],
+})
+export class YourAppModule {
+}
+```
+
+### Importación de Bootstrap en Angular Component
+```typescript
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'app-product',
+  standalone: true,
+  imports: [NgbAlert],
+  templateUrl: './product.component.html'
+})
+export class ProductComponent {
+}
+```
