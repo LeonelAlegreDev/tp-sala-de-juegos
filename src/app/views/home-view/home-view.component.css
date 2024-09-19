@@ -65,4 +65,13 @@
 
 #logged_wrapper {
     color: white;
+
+    input{
+        display: none;
+    }
+    label{
+        cursor: pointer;
+        border: 1px solid white;
+        padding: 5px 10px;
+    }
 }
