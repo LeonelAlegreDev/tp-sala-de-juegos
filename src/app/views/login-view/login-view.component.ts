@@ -87,4 +87,11 @@ export class LoginViewComponent {
       console.log('Formulario invalido');
     }
   }
+
+  Autocompletar() {
+    this.form.setValue({
+      email: 'usuario1@email.com',
+      password: '123456'
+    });
+  }
 }

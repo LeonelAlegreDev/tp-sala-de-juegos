@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MenuComponent } from '../../components/menu/menu.component';
 
 @Component({
   selector: 'app-home-view',
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet, MenuComponent],
   templateUrl: './home-view.component.html',
   styleUrl: './home-view.component.css'
 })

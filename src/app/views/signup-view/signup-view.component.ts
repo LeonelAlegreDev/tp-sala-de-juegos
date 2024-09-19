@@ -92,4 +92,11 @@ export class SignupViewComponent {
       else this.password_error = '';
     }
   }
+
+  Autocompletar() {
+    this.form.setValue({
+      email: 'usuario1@email.com',
+      password: '123456'
+    });
+  }
 }
