@@ -43,8 +43,10 @@
                 margin-top: 5px;
             }
         }
-
-        button{
+        input{
+            display: none;
+        }
+        label{
             border: none;
             padding: 10px 25px;
             border-radius: 5px;
@@ -53,10 +55,14 @@
             background-color: var(--primary-color);
         }
 
-        button:hover{
+        label:hover{
             cursor: pointer;
         }
 
     }
 
+}
+
+#logged_wrapper {
+    color: white;
 }

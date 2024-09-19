@@ -1,5 +1,7 @@
 @if (IsLoggedIn()) {
-
+    <div id="logged_wrapper">
+        <h1>Accediste a tu cuenta con exito!</h1>
+    </div>
 }
 @else {
     <div id="unlogged_wrapper">
@@ -11,7 +13,8 @@
                 <h1>Sala de Juegos</h1>
                 <p>Diversión asegurada.</p>
             </div>
-            <button>Comenzá ahora</button>
+            <input id="login" type="button" routerLink="/login" routerLinkActive="active-route">
+            <label for="login">Comenzá ahora</label>
         </div>
     </div>
 }

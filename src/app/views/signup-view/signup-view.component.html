@@ -1,4 +1,31 @@
-<h1>Crear una cuenta</h1>
-<input type="email" placeholder="Ingrese su email" [(ngModel)]="email_field">
-<input type="password" placeholder="Ingrese su contraseña" [(ngModel)]="password_field">
-<button (click)="Signup()">Enviar</button>
+<div id="wrapper">
+    <div id="header">
+        <h1> Sala de Juegos</h1>
+        <h2>Crear cuenta</h2>
+        <img src="../../../assets/icons/gamer-zone.ico">
+    </div>
+
+    <form [formGroup]="form">
+        <label for="email">Ingresá tu email</label>
+        <input id="email" name="email" type="email" placeholder="Ingrese su email" required formControlName="email">
+        <span>{{ email_error }}</span>
+
+
+        <label for="password">Ingresá tu contraseña</label>
+        <input id="password" name="password" type="password" formControlName="password" placeholder="Ingrese su contraseña" requiered>
+        <span>{{ password_error }}</span>
+        
+
+        <button (click)="Submit()">Registrarse</button>
+        <span id="last_span">{{ form_error }}</span>
+
+    </form>
+
+    <div id="signup">
+        <p>¿Ya tenés una cuenta?</p>
+        <button routerLink="/login" routerLinkActive="active-route">Iniciar sesión</button>
+
+    </div>
+
+</div>
+
