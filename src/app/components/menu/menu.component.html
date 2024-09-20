@@ -1,6 +1,6 @@
 <nav>
     <input id="home" type="button" routerLink="/home" routerLinkActive="active-route">
-    <label for="home">Home</label>
+    <label for="home">Inicio</label>
 
     @if(!authService.IsLoggedIn()){
         <input id="login" type="button" routerLink="/login" routerLinkActive="active-route" >
@@ -9,4 +9,7 @@
         <input id="signup" type="button" routerLink="/signup" routerLinkActive="active-route" >
         <label for="signup">Crear cuenta</label>
     }
+
+    <input id="about-me" type="button" routerLink="/about-me" routerLinkActive="active-route">
+    <label for="about-me">Sobre Mí</label>
 </nav>
