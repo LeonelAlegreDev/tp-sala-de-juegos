@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    color: var(--light-text);
+    color: var(--light-color);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri;
 }
 header{

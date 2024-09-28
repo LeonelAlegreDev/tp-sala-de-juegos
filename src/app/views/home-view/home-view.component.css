@@ -34,7 +34,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: var(--light-text);
+            color: var(--light-color);
 
             h1{
                 font-size: 32px;
