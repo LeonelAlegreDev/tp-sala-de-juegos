@@ -18,7 +18,7 @@ export class JuegosComponent {
 
 
   animationDelay = 3000; // Duración de la animación en ms
-  autoTime = 8000; // Cambio automático en ms
+  autoTime = 10000; // Cambio automático en ms
 
   // Variables para controlar los timeouts
   runTimeOut: any = 0;

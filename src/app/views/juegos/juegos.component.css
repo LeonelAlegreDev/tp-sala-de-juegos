@@ -29,11 +29,6 @@ a{
     width: 100%;
     height: 100%;
 
-    .ahorcado {
-        background-image: url('../../../assets/images/ahorcado-background.png');
-        background-size: cover;
-        background-color: var(--background-color);
-    }
     .item{
         width: 100%;
         height: 100%;
@@ -65,10 +60,13 @@ a{
         .title {
             font-size: 5em;
             margin-top: 18px;
-            color: #f1683a;
+            color: var(--background-color);
+            text-shadow: 0 1px 1px rgb(255, 255, 255);
         }
         .topic {
             font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 1px rgb(0, 0, 0);
         }
         .buttons{
             display: grid;
@@ -89,6 +87,9 @@ a{
                 border: 1px solid #fff;
                 color: #eee;
             }
+        }
+        .des{
+            background-color: red;
         }
     }
 }
@@ -140,26 +141,19 @@ a{
     display: flex;
     gap: 20px;
 
-    .ahorcado {
-        background-image: url('../../../assets/images/ahorcado-thumbnail.png');
-        background-size: cover;
-        background-color: var(--background-color);
-    }
-
     .item{
         width: 150px;
         height: 220px;
         flex-shrink: 0;
         position: relative;
         border-radius: 20px;
+        overflow: hidden;
         background-color: var(--background-color);
     
         img{
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
-
         }
 
         .content{
@@ -332,6 +326,10 @@ a{
     animation: contentOut 1.5s linear 1 forwards;
 }
 
+.carousel.prev .list .item:nth-child(2) .content
+{
+    animation: boxOut 1.5s linear 1 forwards;
+}
 /* Contenido transiciona hacia arriba y se desvanece */
 @keyframes contentOut{
     to{
