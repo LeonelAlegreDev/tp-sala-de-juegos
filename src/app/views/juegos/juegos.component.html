@@ -6,10 +6,12 @@
 
         <!-- IITEM LIST -->
         <div #list class="list">
+
+            <!-- EL AHORCADO -->
             <div #listItem class="item">
                 <img src="../../../assets/images/ahorcado-background.png">
                 <div class="content">
-                    <div class="title">El Ahorcado</div>
+                    <h1 class="title">El Ahorcado</h1>
                     <div class="topic">Adivinanza</div>
                     <div class="des">
                         <h2>¡Adivina la palabra antes de que sea demasiado tarde!</h2>
@@ -25,13 +27,20 @@
                     </div>
                 </div>
             </div>
-            <div #listItem class="item">
+
+            <!-- MAYOR O MENOR -->
+            <div #listItem class="item" id="mayor-menor">
                 <img src="../../../assets/images/card-game-background.png">
                 <div class="content">
-                    <div class="title">DESIGN SLIDER</div>
-                    <div class="topic">ANIMAL</div>
+                    <h1 class="title">¿Mayor o Menor?</h1>
+                    <div class="topic">Juego de cartas</div>
                     <div class="des">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut sequi, rem magnam nesciunt minima placeat, itaque eum neque officiis unde, eaque optio ratione aliquid assumenda facere ab et quasi ducimus aut doloribus non numquam. Explicabo, laboriosam nisi reprehenderit tempora at laborum natus unde. Ut, exercitationem eum aperiam illo illum laudantium?
+                        <h2>¡Pon a prueba tu suerte y estrategia en este clásico juego de cartas!</h2>
+                        <p>
+                            Cada ronda, tendrás que decidir si la próxima
+                            carta será más alta o más baja que la anterior. 
+                            ¿Podrás acumular la mayor cantidad de puntos y convertirte en el campeón?
+                        </p>   
                     </div>
                     <div class="buttons">
                         <button>Jugar Ahora</button>
@@ -39,13 +48,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- TODO: Modificar botones -->
+
+            <!-- PREGUNTADOS-->
             <div #listItem class="item">
                 <img src="../../../assets/images/preguntados-background.jpg">
                 <div class="content">
-                    <div class="title">DESIGN SLIDER</div>
-                    <div class="topic">ANIMAL</div>
+                    <div class="title">PREGUNTADOS</div>
+                    <div class="topic">Trivia</div>
                     <div class="des">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut sequi, rem magnam nesciunt minima placeat, itaque eum neque officiis unde, eaque optio ratione aliquid assumenda facere ab et quasi ducimus aut doloribus non numquam. Explicabo, laboriosam nisi reprehenderit tempora at laborum natus unde. Ut, exercitationem eum aperiam illo illum laudantium?
+                        <h2>¡Conviértete en un maestro de la trivia!</h2>
+                        <p>
+                            Pon a prueba tus conocimientos en una amplia variedad 
+                            de temas y descubre cuánto sabes. Con cada pregunta acertada, 
+                            ¡estarás más cerca de convertirte en un verdadero experto!
+                        </p>
                     </div>
                     <div class="buttons">
                         <button>Jugar Ahora</button>
@@ -53,13 +71,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SPACE INVADERS -->
             <div #listItem class="item">
                 <img src="../../../assets/images/space-invaders-background.jpg">
                 <div class="content">
-                    <div class="title">DESIGN SLIDER</div>
-                    <div class="topic">ANIMAL</div>
+                    <div class="title">Space Invaders</div>
+                    <div class="topic">Arcade</div>
                     <div class="des">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut sequi, rem magnam nesciunt minima placeat, itaque eum neque officiis unde, eaque optio ratione aliquid assumenda facere ab et quasi ducimus aut doloribus non numquam. Explicabo, laboriosam nisi reprehenderit tempora at laborum natus unde. Ut, exercitationem eum aperiam illo illum laudantium?
+                        <h2>¡Defiende la Tierra de la invasión alienígena!</h2>
+                        <p>
+                            Prepárate para una intensa acción arcade. Esquiva 
+                            las balas enemigas y destruye a los invasores 
+                            alienígenas antes de que sea demasiado tarde. 
+                            ¡La supervivencia de la humanidad está en tus manos!
+                        </p>
                     </div>
                     <div class="buttons">
                         <button>Jugar Ahora</button>
@@ -71,48 +97,53 @@
 
         <!-- THUMBNAILS -->
         <div #thumbnail class="thumbnail">
+
+            <!-- EL AHORCADO -->
             <div #listThumb class="item">
                 <img src="../../../assets/images/ahorcado-thumbnail.png">
                 <div class="content">
                     <div class="title">
-                        Name Slider
+                        El Ahorcado 
+                        <!-- TODO: Modificar estilos del thumbnail -->
                     </div>
                     <div class="description">
-                        Description
+                        Adivinanza
                     </div>
                 </div>
             </div>
+
+            <!-- MAYOR O MENOR -->
             <div #listThumb class="item">
                 <img src="../../../assets/images/card-game-thumbnail.png">
                 <div class="content">
                     <div class="title">
-                        Name Slider
+                        ¿Mayor o Menor?
                     </div>
                     <div class="description">
-                        Description
+                        Juego de cartas
                     </div>
                 </div>
             </div>
+
+            <!-- PREGUNTADOS -->
             <div #listThumb class="item">
                 <img src="../../../assets/images/preguntados-thumbnail.jpg">
                 <div class="content">
                     <div class="title">
-                        Name Slider
+                        Preguntados
                     </div>
                     <div class="description">
-                        Description
+                        Juego de cartas
                     </div>
                 </div>
             </div>
+
+            <!-- SPACE INVADERS -->
             <div #listThumb class="item">
                 <img src="../../../assets/images/space-invaders-thumbnail.jpg">
                 <div class="content">
-                    <div class="title">
-                        Name Slider
-                    </div>
-                    <div class="description">
-                        Description
-                    </div>
+                    <h2 class="title">Space Invaders</h2>
+                    <h3 class="description">Arcade</h3>
                 </div>
             </div>
         </div>

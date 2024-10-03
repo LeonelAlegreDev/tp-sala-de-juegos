@@ -89,6 +89,9 @@ a{
             }
         }
         .des{
+            padding: 0;
+            margin-top: 5px;
+            line-height: 1.6em;
             background-color: red;
         }
     }
