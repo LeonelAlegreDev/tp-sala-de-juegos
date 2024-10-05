@@ -1,10 +1,11 @@
 import { Component, ViewChildren, QueryList, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-juegos',
   standalone: true,
-  imports: [MenuComponent],
+  imports: [MenuComponent, RouterLink, RouterLinkActive],
   templateUrl: './juegos.component.html',
   styleUrl: './juegos.component.css'
 })

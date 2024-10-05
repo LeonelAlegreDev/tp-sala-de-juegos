@@ -1,0 +1,30 @@
+<app-menu></app-menu>
+<div id="wrapper">
+    <section id="game">
+
+        <!-- JUEGO INICIADO -->
+        @if(isGameStarted) {
+            <div *ngFor="let card of mazo; let i = index">
+
+                <!-- TODO: Obtener todas las cardBack y asignarlas a un elemento card -->
+                <div class="card face-down" #cardFront [ngStyle]="{'background-image': 'url(' + card.frontImg + ')',
+                    'transform': 'translateX(' + CalculateTranslation(i) * 3 + 'px)'}">
+                </div>
+                <div class="card" #cardBack [ngStyle]="{'background-image': 'url(' + card.backImg + ')',
+                    'transform': 'translateX(' + CalculateTranslation(i) * 3 + 'px)'}">
+                </div>
+            </div>
+            
+            <button id="rotate" (click)="RotateCard(this.mazo.lastIndexOf, this.mazo.lastIndexOf)">rotar</button>
+        }
+        @else {
+            <h1>¿Mayor o Menor?</h1>
+            <h2>Instrucciones</h2>
+            <p class="instrucciones">
+                Saca una carta del mazo y adivina si la siguiente carta será mayor o menor.
+            </p>
+            <button (click)="Start()">Jugar</button>
+        }
+    </section>
+
+</div>

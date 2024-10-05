@@ -77,22 +77,26 @@ a{
 
             button{
                 border: none;
-                background-color: #eee;
                 letter-spacing: 3px;
                 font-family: Poppins;
                 font-weight: 500;
-            }
-            button:nth-child(2){
-                background-color: transparent;
-                border: 1px solid #fff;
-                color: #eee;
+                font-weight: bold;
+                color: var(--background-color);
+                cursor: pointer;
+                border-radius: 5px;
+                background-color: var(--primary-color);
             }
         }
         .des{
-            padding: 0;
+            padding: 10px 15px;
             margin-top: 5px;
             line-height: 1.6em;
-            background-color: red;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+
+            p{
+                font-size: 20px;
+            }
         }
     }
 }
@@ -103,7 +107,7 @@ a{
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 840px) {
     .carousel .list .item .content{
         .title {
             font-size: 4em;
@@ -113,7 +117,7 @@ a{
         }
     }
 }
-@media screen and (max-width: 650px){
+@media screen and (max-width: 670px){
     .carousel .list .item .content{
         .title {
             font-size: 3em;
@@ -137,7 +141,7 @@ a{
 /* THUMBNAIL */
 .thumbnail{
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
     left: 50%;
     width: max-content;
     z-index: 100;
@@ -182,27 +186,28 @@ a{
     top: 80%;
     right: 52%;
     z-index: 100;
-    width: 300px;
+    width: 30%;
     max-width: 30%;
     display: flex;
     gap: 10px;
     align-items: center;
+    background-color: red;
     
     button{
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #eee4;
-        border: none;
+        border: 1px solid white;
+        box-shadow: 0 0 1px 10px #0004;
         color: #fff;
         font-family: monospace;
         font-weight: bold;
         transition: .5s;
+        background-color: rgba(0, 0, 0, 0.6);
     }
 
-    button:hover{
-        background-color: #fff;
-        color: #000;
+    button:ho5ver{
+        background-color: rgba(0, 0, 0, 0.8);
     }
 }
 
@@ -305,7 +310,7 @@ a{
     to{
         width: 150px;
         height: 220px;
-        bottom: 50px;
+        bottom: 20px;
         left: 50%;
         border-radius: 20px;
     }
