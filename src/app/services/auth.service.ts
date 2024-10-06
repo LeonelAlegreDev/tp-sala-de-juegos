@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedIn: boolean = false;
+  private isLoggedIn: boolean = true;
   msjError: string = '';
   user: any;
 

@@ -30,28 +30,123 @@ h1{
     background-position: center;
 
     #mazo{
-        position: relative;
+        position: absolute;
+        height: calc(930px / 3.8);
+        width: calc(655px / 3.8 + 60px);
+
         display: flex;
         flex-direction: row;
-        width: calc((655px / 3.8));
-        
+        overflow: visible;
+        align-self: flex-start;
     }
+
     .card{
-        position: absolute;
+        position: relative;
         display: flex;
         width: calc(655px / 3.8);
         height: calc(930px / 3.8);
-        border: 1px solid black;
+    }
+    .card__face {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
+    .card__face--front {
         border-radius: 20px;
-
         background-size: cover;
+        transform: rotateY(180deg);
     }
-    .face-down{
-        display: none;
-    }
-
+    .card__face--back {
+        background-size: cover;
+        background-image: url("../../../assets/images/mayor-menor/cards/back-card-1.png"); 
+        border-radius: 20px;
+        border-left: 1px solid rgb(255, 255, 255);
+    } 
     #rotate {
         position: absolute;
         bottom: 0;
+    }
+    #hide{
+        position: absolute;
+        bottom: -20px;
+    }
+}
+#game > div:first-child{
+    border: 10ps solid red;
+}
+.showFront {
+    animation: showFront 1s linear forwards;
+}
+.hideFront {
+    animation: hideFront 1s linear forwards;
+}
+.showBack{
+    animation: showBack 1s linear forwards;
+}
+.hideBack{
+    animation: hideBack 1s linear forwards;
+}
+@keyframes showFront {
+    from {
+        transform: rotateY(180deg);
+    }
+    to{
+        transform: rotateY(360deg);
+    }
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.2;
+    }
+}
+@keyframes hideFront {
+    from {
+        transform: rotateY(0);
+    }
+    to{
+        transform: rotateY(-180deg);
+    }
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.2;
+    }
+}
+
+@keyframes showBack {
+    from{
+        transform: rotateY(180deg);
+    }
+    to{
+        transform: rotateY(360deg);
+    }
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.2;
+    }
+}
+@keyframes hideBack {
+    from {
+        transform: rotateY(0);
+    }
+    to{
+        transform: rotateY(180deg);
+    }
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.2;
+    }
+    100%{
+        scale: 1;
     }
 }

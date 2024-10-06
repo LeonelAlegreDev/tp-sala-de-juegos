@@ -4,18 +4,20 @@
 
         <!-- JUEGO INICIADO -->
         @if(isGameStarted) {
-            <div *ngFor="let card of mazo; let i = index">
-
-                <!-- TODO: Obtener todas las cardBack y asignarlas a un elemento card -->
-                <div class="card face-down" #cardFront [ngStyle]="{'background-image': 'url(' + card.frontImg + ')',
-                    'transform': 'translateX(' + CalculateTranslation(i) * 3 + 'px)'}">
-                </div>
-                <div class="card" #cardBack [ngStyle]="{'background-image': 'url(' + card.backImg + ')',
-                    'transform': 'translateX(' + CalculateTranslation(i) * 3 + 'px)'}">
+            <div id="mazo">
+                <div *ngFor="let card of mazo; let i = index">
+    
+                    <div class="card" #card [ngStyle]="{
+                        'transform': 'translateX('+ AcomodarMazo(i) +')'}">
+                        <div class="card__face card__face--front" [ngStyle]="{'background-image': 'url(' + card.frontImg + ')'}"></div>
+                        <div class="card__face card__face--back"></div>
+                    </div>
                 </div>
             </div>
             
-            <button id="rotate" (click)="RotateCard(this.mazo.lastIndexOf, this.mazo.lastIndexOf)">rotar</button>
+            
+            <button id="rotate" (click)="DrawCard()">Mostrar carta</button>
+            <button id="hide" (click)="OcultarCarta()">Ocultar carta</button>
         }
         @else {
             <h1>¿Mayor o Menor?</h1>

@@ -1,4 +1,4 @@
-import { Component, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, Renderer2 } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { NgFor, NgStyle } from '@angular/common';
 
@@ -12,17 +12,21 @@ import { NgFor, NgStyle } from '@angular/common';
 export class MayorMenorComponent {
   // @ViewChildren('cardFront') cardFrontElements: QueryList<ElementRef>;
   // @ViewChildren('cardBack') cardBackElements: QueryList<ElementRef>;
+  @ViewChildren('card') cardElements!: QueryList<ElementRef>;
   
   // Añadir Viewchild para acceder al elemento #mazo
   isGameStarted: boolean = false;
   mazo: any[] = [];
 
-  constructor() { 
-  }
+  constructor(private renderer: Renderer2) {}
+  
   ngOnInit(): void {
-    // Esperamos a que los elementos se hayan renderizado completamente
-    // Una vez que las referencias estén actualizadas, puedes hacer lo que quieras
-    
+    this.GenerarMazo();
+  }
+  ngAfterViewInit() {
+    this.cardElements.changes.subscribe((changedObj) => {
+      console.log(changedObj);
+    });
 
   }
 
@@ -70,13 +74,11 @@ export class MayorMenorComponent {
             file_card = valores[j] + "_";
         }
         const url = relative_path + file_start + file_card + 'white' + '.png';
-        const url_back = relative_path + 'back-card-1.png';
 
         this.mazo.push({ 
           valor: valores[j], 
           palo: palos[i], 
           frontImg: url,
-          backImg: url_back
         });
       }
     }
@@ -85,22 +87,50 @@ export class MayorMenorComponent {
   }
 
   Start(): void {
-    // Inicia el juego
-    this.isGameStarted = true;
-
     console.log("Juego iniciado");
 
-
-    this.GenerarMazo();
-
+    this.isGameStarted = true;
   }
 
-  CalculateTranslation(index: number): number {
-    // Cada par de cartas (2 cartas) se desplaza 1px adicional
-    return Math.floor(index / 2); // Esto genera el desplazamiento deseado
-  }
 
-  RotateCard(face_out: any, face_in: any){
+  AcomodarMazo(i: number): string {
+    const grupo = Math.floor(i / 3); 
+    let transform = i * -100 + grupo * 2;
     
+    return transform + '%';
+  }
+
+  DrawCard(){
+    console.log("Robando carta");
+
+    // Imprimir por consola la ultima carta del mazo
+    console.log(this.mazo[0]);
+
+    // Cambiar el color del borde de la carta a azul
+    console.log(this.cardElements.last.nativeElement);
+
+    this.MostrarCarta();
+  }
+
+  MostrarCarta(){
+    const frontFace = this.cardElements.last.nativeElement.querySelector('.card__face--front');
+    const backFace = this.cardElements.last.nativeElement.querySelector('.card__face--back');
+
+    frontFace.classList.remove('hideFront');
+    frontFace.classList.add('showFront');
+
+    backFace.classList.add('hideBack');
+    backFace.classList.remove('showBack');
+  }
+
+  OcultarCarta(){
+    const frontFace = this.cardElements.last.nativeElement.querySelector('.card__face--front');
+    const backFace = this.cardElements.last.nativeElement.querySelector('.card__face--back');
+    
+    frontFace.classList.remove('showFront');
+    frontFace.classList.add('hideFront');
+    
+    backFace.classList.remove('hideBack');    
+    backFace.classList.add('showBack');  
   }
 }
