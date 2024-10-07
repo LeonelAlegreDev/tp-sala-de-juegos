@@ -1,6 +1,7 @@
-import { Component, ViewChildren, ElementRef, QueryList, Renderer2 } from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { NgFor, NgStyle } from '@angular/common';
+import { fromEvent, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mayor-menor',
@@ -10,24 +11,74 @@ import { NgFor, NgStyle } from '@angular/common';
   styleUrl: './mayor-menor.component.css'
 })
 export class MayorMenorComponent {
-  // @ViewChildren('cardFront') cardFrontElements: QueryList<ElementRef>;
-  // @ViewChildren('cardBack') cardBackElements: QueryList<ElementRef>;
   @ViewChildren('card') cardElements!: QueryList<ElementRef>;
-  
-  // Añadir Viewchild para acceder al elemento #mazo
+  @ViewChild('viewport') viewportElement!: ElementRef;
+  @ViewChild('game') gameElement!: ElementRef;
+
+  // Añadir Viewchild para acceder al elemento #mazos
   isGameStarted: boolean = false;
   mazo: any[] = [];
+  private viewportReady$: Observable<boolean>;
+  private resizeObserver: ResizeObserver;
 
-  constructor(private renderer: Renderer2) {}
-  
-  ngOnInit(): void {
-    this.GenerarMazo();
-  }
-  ngAfterViewInit() {
-    this.cardElements.changes.subscribe((changedObj) => {
-      console.log(changedObj);
+  constructor(private renderer: Renderer2) {
+    this.viewportReady$ = new Observable(observer => {
+      const interval = setInterval(() => {
+        if (this.viewportElement) {
+          clearInterval(interval);
+          observer.next(true);
+          observer.complete();
+        }
+      }, 50);
     });
 
+    // Inicializa el resizeObserver
+     this.resizeObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        // Validar si el viewportElement esta listo
+        if (!this.viewportElement) return;
+        
+        this.ResizeViewport();
+      });
+    });
+  }
+  
+
+  ngOnDestroy() {
+    this.resizeObserver.disconnect();
+  }
+
+  ngOnInit(): void {
+    this.GenerarMazo();
+    
+    // Espera a que el viewportElement esté listo para redimensionar el viewport
+    this.viewportReady$.subscribe(() => {
+      this.ResizeViewport();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.cardElements.changes.subscribe((changedObj) => {
+    });
+
+    this.resizeObserver.observe(this.gameElement.nativeElement);
+  }
+
+  ResizeViewport() {
+    const viewportElement = this.viewportElement.nativeElement;
+
+    const gameViewportHeight = this.gameElement.nativeElement.clientHeight;
+    const gameViewportWidth = this.gameElement.nativeElement.clientWidth;
+    const minDimension = Math.min(gameViewportHeight, gameViewportWidth);
+
+    // Sabiendo que la resolucion del viewportElement es de 1000px x 1000px
+    // y eligiendo el menor de los lados del contenedor
+    // el tamaño del viewportElement debe tener como largo de de sus lados
+    // el valor del lado menor del contenedor
+    const scale = (minDimension / 1000);    
+    
+    viewportElement.style.transform = `scale(${scale})`;
+    viewportElement.style.transformOrigin = 'center';
   }
 
   private GenerarMazo(): void {
@@ -82,8 +133,6 @@ export class MayorMenorComponent {
         });
       }
     }
-
-    console.log("Mazo generado: ", this.mazo);
   }
 
   Start(): void {
@@ -95,21 +144,9 @@ export class MayorMenorComponent {
 
   AcomodarMazo(i: number): string {
     const grupo = Math.floor(i / 3); 
-    let transform = i * -100 + grupo * 2;
+    let transform = i * - 100 + grupo * 2;
     
     return transform + '%';
-  }
-
-  DrawCard(){
-    console.log("Robando carta");
-
-    // Imprimir por consola la ultima carta del mazo
-    console.log(this.mazo[0]);
-
-    // Cambiar el color del borde de la carta a azul
-    console.log(this.cardElements.last.nativeElement);
-
-    this.MostrarCarta();
   }
 
   MostrarCarta(){

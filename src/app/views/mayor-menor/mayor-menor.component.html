@@ -1,23 +1,57 @@
 <app-menu></app-menu>
 <div id="wrapper">
-    <section id="game">
+    <section id="game" #game>
 
         <!-- JUEGO INICIADO -->
         @if(isGameStarted) {
-            <div id="mazo">
-                <div *ngFor="let card of mazo; let i = index">
-    
-                    <div class="card" #card [ngStyle]="{
-                        'transform': 'translateX('+ AcomodarMazo(i) +')'}">
-                        <div class="card__face card__face--front" [ngStyle]="{'background-image': 'url(' + card.frontImg + ')'}"></div>
-                        <div class="card__face card__face--back"></div>
+            <!-- VIEWPORT -->
+            <div id="viewport" #viewport>
+
+                <!-- PUNTOS -->
+                <div class="row row-puntos">
+                    <div id="puntos-container">
+                        <span id="puntos-total">$1.000</span>
+                        <div class="modificador">
+                            <span id="base">5</span>
+                            <span class="operador"> X </span>
+                            <span id="producto">10</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- CARTAS -->
+                <div class="row row-cards">
+                    <div id="mazo">
+                        <div *ngFor="let card of mazo; let i = index">
+                            <div class="card" #card [ngStyle]="{
+                                'transform': 'translateX('+ AcomodarMazo(i) +')'}">
+                                <div class="card__face card__face--front" [ngStyle]="{'background-image': 'url(' + card.frontImg + ')'}"></div>
+                                <div class="card__face card__face--back"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="row row-buttons">
+                    <div id="buttons-container">
+                        <button>Mayor</button>
+                        <span class="operador">X</span>
+                        <button >Menor</button>
+                    </div>
+                </div>
+
+                <!-- BANCA -->
+                <div class="row row-banca">
+                    <div id="banca-container">
+                        <span id="banca-total">Banca</span>
+                        <span id="banca-total">$12.000</span>
+                    </div>
+                </div>
+                
+                <button id="rotate" (click)="MostrarCarta()">Mostrar carta</button>
+                <button id="hide" (click)="OcultarCarta()">Ocultar carta</button>
             </div>
-            
-            
-            <button id="rotate" (click)="DrawCard()">Mostrar carta</button>
-            <button id="hide" (click)="OcultarCarta()">Ocultar carta</button>
         }
         @else {
             <h1>¿Mayor o Menor?</h1>
