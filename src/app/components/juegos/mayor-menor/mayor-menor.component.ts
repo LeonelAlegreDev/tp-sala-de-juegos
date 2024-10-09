@@ -1,7 +1,7 @@
 import { Component, ViewChildren, ElementRef, QueryList, Renderer2, ViewChild, HostListener } from '@angular/core';
-import { MenuComponent } from '../../components/menu/menu.component';
 import { NgFor, NgStyle } from '@angular/common';
-import { fromEvent, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { MenuComponent } from '../../menu/menu.component';
 
 @Component({
   selector: 'app-mayor-menor',
@@ -12,85 +12,34 @@ import { fromEvent, Observable } from 'rxjs';
 })
 export class MayorMenorComponent {
   @ViewChildren('card') cardElements!: QueryList<ElementRef>;
-  @ViewChild('viewport') viewportElement!: ElementRef;
-  @ViewChild('game') gameElement!: ElementRef;
 
   // Añadir Viewchild para acceder al elemento #mazos
   isGameStarted: boolean = false;
+
+
   mazo: any[] = [];
-  private viewportReady$: Observable<boolean>;
-  private resizeObserver: ResizeObserver;
   run = {
     banca: 100,
-    racha: 0,
     apuesta: 20,
+    racha: 0,
     pozo: 0
   };
 
-  constructor(private renderer: Renderer2) {
-    this.viewportReady$ = new Observable(observer => {
-      const interval = setInterval(() => {
-        if (this.viewportElement) {
-          clearInterval(interval);
-          observer.next(true);
-          observer.complete();
-        }
-      }, 50);
-    });
-
-    // Inicializa el resizeObserver
-     this.resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        // Validar si el viewportElement esta listo
-        if (!this.viewportElement) return;
-        
-        this.ResizeViewport();
-      });
-    });
-  }
-  
-  ngOnDestroy() {
-    this.resizeObserver.disconnect();
-  }
-
   ngOnInit(): void {
     this.GenerarMazo();
-    
-    // Espera a que el viewportElement esté listo para redimensionar el viewport
-    this.viewportReady$.subscribe(() => {
-      this.ResizeViewport();
-    });
   }
 
   ngAfterViewInit() {
-    this.cardElements.changes.subscribe((changedObj) => {
-    });
-
-    this.resizeObserver.observe(this.gameElement.nativeElement);
-  }
-
-  ResizeViewport() {
-    const viewportElement = this.viewportElement.nativeElement;
-
-    const gameViewportHeight = this.gameElement.nativeElement.clientHeight;
-    const gameViewportWidth = this.gameElement.nativeElement.clientWidth;
-    const minDimension = Math.min(gameViewportHeight, gameViewportWidth);
-
-    // Sabiendo que la resolucion del viewportElement es de 1000px x 1000px
-    // y eligiendo el menor de los lados del contenedor
-    // el tamaño del viewportElement debe tener como largo de de sus lados
-    // el valor del lado menor del contenedor
-    const scale = (minDimension / 1000);    
-    
-    viewportElement.style.transform = `scale(${scale})`;
-    viewportElement.style.transformOrigin = 'center';
+    // Observa si ocurren cambios en los elemenots cartas
+    // this.cardElements.changes.subscribe((changedObj) => {
+    // });
   }
 
   private GenerarMazo(): void {
     // Genera un array de 52 cartas con objetos que contienen el valor y el palo de la carta
     let palos = ['corazones', 'diamantes', 'treboles', 'picas'];
     let valores = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-    const relative_path = '../../../assets/images/mayor-menor/cards/';
+    const relative_path = '../../../../assets/images/mayor-menor/cards/';
 
     // Recorre los palos y los valores para generar el mazo
     for (let i = 0; i < palos.length; i++) {

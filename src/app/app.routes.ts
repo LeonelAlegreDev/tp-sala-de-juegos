@@ -6,6 +6,8 @@ import { AboutMeComponent } from './views/about-me/about-me.component';
 import { JuegosComponent } from './views/juegos/juegos.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { MayorMenorComponent } from './views/mayor-menor/mayor-menor.component';
+import { AhorcadoComponent } from './components/juegos/ahorcado/ahorcado.component';
+import { JuegoComponent } from './views/juego/juego.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: "full" },
@@ -14,6 +16,6 @@ export const routes: Routes = [
     { path: 'signup', component: SignupViewComponent},
     { path: 'about-me', component: AboutMeComponent},
     { path: 'juegos', component: JuegosComponent, },
+    { path: 'juegos/:id', component: JuegoComponent, },
     { path: 'profile', component: ProfileComponent },
-    { path: "juegos/mayor-menor", component: MayorMenorComponent }
 ];

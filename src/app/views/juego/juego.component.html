@@ -1,0 +1,35 @@
+<app-menu></app-menu>
+<div id="wrapper">
+    <section id="game" #game>
+
+        <!-- JUEGO INICIADO -->
+        @if(isGameStarted) {
+            <!-- VIEWPORT -->
+            <div id="viewport" #viewport>
+                <ng-template #vcr></ng-template>
+            </div>
+        }
+        @else {
+        <section id="welcome">
+            <h1>¿Mayor o Menor?</h1>
+            <h2>¿Listo para poner a prueba tu suerte y habilidad?</h2>
+            <p>
+                Comienza tu partida con 100 monedas de oro. Con cada apuesta, 
+                arriesgarás 20 monedas para adivinar si la siguiente carta será 
+                mayor o menor que la actual.<strong>¡Las rachas son tu clave para la riqueza!</strong>
+            </p>
+            <p>
+                Aciertos consecutivos: Cada vez que adivines correctamente, 
+                tu racha crecerá y el pozo aumentará. ¡Cuanto más larga sea 
+                tu racha, mayor será la recompensa!
+                <br>
+                Rompe la racha: Si fallas, perderás tu racha actual 
+                y el pozo se reiniciará. ¡Pero no te desanimes! Siempre 
+                hay una nueva oportunidad para comenzar de nuevo.
+            </p>
+            <button (click)="Start()">Jugar</button>
+        </section>
+        }
+    </section>
+
+</div>

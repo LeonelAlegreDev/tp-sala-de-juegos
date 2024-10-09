@@ -2,11 +2,11 @@
 <div id="wrapper">
     <section id="game" #game>
 
+        <!-- TODO: seguir -->>
         <!-- JUEGO INICIADO -->
         @if(isGameStarted) {
             <!-- VIEWPORT -->
             <div id="viewport" #viewport>
-
                 <!-- PUNTOS -->
                 <div class="row row-puntos">
                     <div id="puntos-container">
@@ -18,7 +18,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- CARTAS -->
                 <div class="row row-cards">
                     <div class="cards-container">
@@ -52,29 +51,9 @@
                         <span id="banca-title">Banca</span>
                         <span id="banca-total">${{run.banca}}</span>
                     </div>
-                </div>                
+                </div>  
+              
             </div>
-        }
-        @else {
-        <section id="welcome">
-            <h1>¿Mayor o Menor?</h1>
-            <h2>¿Listo para poner a prueba tu suerte y habilidad?</h2>
-            <p>
-                Comienza tu partida con 100 monedas de oro. Con cada apuesta, 
-                arriesgarás 20 monedas para adivinar si la siguiente carta será 
-                mayor o menor que la actual.<strong>¡Las rachas son tu clave para la riqueza!</strong>
-            </p>
-            <p>
-                Aciertos consecutivos: Cada vez que adivines correctamente, 
-                tu racha crecerá y el pozo aumentará. ¡Cuanto más larga sea 
-                tu racha, mayor será la recompensa!
-                <br>
-                Rompe la racha: Si fallas, perderás tu racha actual 
-                y el pozo se reiniciará. ¡Pero no te desanimes! Siempre 
-                hay una nueva oportunidad para comenzar de nuevo.
-            </p>
-            <button (click)="Start()">Jugar</button>
-        </section>
         }
     </section>
 
