@@ -1,6 +1,5 @@
 import { Component, ViewChildren, ElementRef, QueryList, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { NgFor, NgStyle } from '@angular/common';
-import { Observable } from 'rxjs';
 import { MenuComponent } from '../../menu/menu.component';
 
 @Component({
@@ -15,7 +14,8 @@ export class MayorMenorComponent {
 
   // Añadir Viewchild para acceder al elemento #mazos
   isGameStarted: boolean = false;
-
+  gameStateList = ['start', 'playing', 'end', 'pause'];
+  gameState: string = this.gameStateList[0];
 
   mazo: any[] = [];
   run = {
@@ -27,6 +27,7 @@ export class MayorMenorComponent {
 
   ngOnInit(): void {
     this.GenerarMazo();
+  console.log(this.gameState)
   }
 
   ngAfterViewInit() {
@@ -94,7 +95,7 @@ export class MayorMenorComponent {
   Start(): void {
     console.log("Juego iniciado");
 
-    this.isGameStarted = true;
+    this.gameState = this.gameStateList[1];
   }
 
 

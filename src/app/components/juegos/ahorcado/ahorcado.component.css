@@ -1,0 +1,42 @@
+
+
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 95vh;
+    width: 95vw;
+    padding: 0 4%;
+
+    h1{
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    h2{
+        font-size: 3em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    p{
+        font-size: 2.5em;
+        font-family: "Handjet-Regular";
+        color: black;
+    }
+
+    button{
+        border: none;
+        color: black;
+        font-family: "Handjet-Bold";
+        font-size: 1.8em;
+        padding: 5px 25px;
+        border-radius: 50px;
+        box-shadow: 0 0 10px 2px rgb(0, 0, 0);
+        background-color: var(--primary-color);
+    }
+}
+
+#viewport{
+    background-color: blue;
+}

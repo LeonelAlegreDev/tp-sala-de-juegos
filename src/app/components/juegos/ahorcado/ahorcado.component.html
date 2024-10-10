@@ -1,1 +1,14 @@
-<p>ahorcado works!</p>
+<div id="wrapper" #wrapper>
+    @if(gameState === 'start'){
+        <section class="screen screen-start">
+            <h1>Ahorcado</h1>
+            <p>¿Listo para poner a prueba tu vocabulario?</p>
+            <button (click)="Start()">Jugar</button>
+        </section>
+    }
+    @else if (gameState === 'playing') {
+        <section class="screen screen-playing">
+            playing
+        </section>
+    }
+</div>

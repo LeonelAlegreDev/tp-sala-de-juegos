@@ -1,75 +1,38 @@
-h1{
-    font-family: "Handjet-Regular";
-    font-size: 3em;
-    text-align: center;
-    margin: 10px 0;
-}
-#wrapper{
-    width: 100%;
-    height: 100%;
-    margin: auto;
+.card{
+    position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2.5% 2.5%;
+    width: calc(655px / 4);
+    height: calc(930px / 4);
 }
-
-#game{
-    width: 100%;
+.card__face {
+    position: absolute;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    width: 100%;
 
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+.card__face--front {
     border-radius: 20px;
-    background-color: rgb(2, 2, 2);
-    background-image: url('../../../assets/images/card-game-background.png');
-    background-size:cover;
-    background-position: center;
-
-    box-shadow: 0 0 15px 3px rgb(0, 0, 0);
-
-    .card{
-        position: relative;
-        display: flex;
-        width: calc(655px / 4);
-        height: calc(930px / 4);
-    }
-    .card__face {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-
-        transition: transform 1s;
-        transform-style: preserve-3d;
-        backface-visibility: hidden;
-    }
-    .card__face--front {
-        border-radius: 20px;
-        background-size: cover;
-        transform: rotateY(180deg);
-    }
-    .card__face--back {
-        background-size: cover;
-        background-image: url("../../../assets/images/mayor-menor/cards/back-card-1.png"); 
-        border-radius: 20px;
-        border-left: 1px solid rgb(255, 255, 255);
-    } 
-    #rotate {
-        position: absolute;
-        bottom: 0;
-    }
-    #hide{
-        position: absolute;
-        bottom: -20px;
-    }
+    background-size: cover;
+    transform: rotateY(180deg);
 }
-#game > div:first-child{
-    border: 10ps solid red;
+.card__face--back {
+    background-size: cover;
+    background-image: url("../../../../assets/images/mayor-menor/cards/back-card-1.png"); 
+    border-radius: 20px;
+    border-left: 1px solid rgb(255, 255, 255);
+} 
+#rotate {
+    position: absolute;
+    bottom: 0;
 }
+#hide{
+    position: absolute;
+    bottom: -20px;
+}
+
 
 #viewport{
     width: 1000px;
@@ -262,11 +225,7 @@ h1{
             box-shadow: 0 0 10px 2px rgb(0, 0, 0) inset;
         }
     }
-
 }
-
-
-
 
 .showFront {
     animation: showFront 1s linear forwards;
@@ -349,13 +308,27 @@ h1{
 #welcome{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
-    height: 75%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     padding: 0 4%;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.192);
+
+    h1{
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    h2{
+        font-size: 3em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    p{
+        font-size: 2.5em;
+        font-family: "Handjet-Regular";
+        color: black;
+    }
 
     button{
         border: none;

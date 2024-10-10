@@ -1,60 +1,72 @@
-<app-menu></app-menu>
-<div id="wrapper">
-    <section id="game" #game>
-
-        <!-- TODO: seguir -->>
-        <!-- JUEGO INICIADO -->
-        @if(isGameStarted) {
-            <!-- VIEWPORT -->
-            <div id="viewport" #viewport>
-                <!-- PUNTOS -->
-                <div class="row row-puntos">
-                    <div id="puntos-container">
-                        <span id="puntos-total">${{ run.pozo }}</span>
-                        <div class="modificador">
-                            <span id="base">{{ run.apuesta }}</span>
-                            <span class="operador"> X </span>
-                            <span id="producto">{{ run.racha }}</span>
-                        </div>
-                    </div>
+<div id="viewport" #viewport>
+    @if(gameState === 'start'){
+        <section id="welcome" class="screen screen-start">
+            <h1>¿Mayor o Menor?</h1>
+            <h2>¿Listo para poner a prueba tu suerte y habilidad?</h2>
+            <p>
+                Comienza tu partida con 100 monedas de oro. Con cada apuesta, 
+                arriesgarás 20 monedas para adivinar si la siguiente carta será 
+                mayor o menor que la actual.<strong>¡Las rachas son tu clave para la riqueza!</strong>
+            </p>
+            <p>
+                Aciertos consecutivos: Cada vez que adivines correctamente, 
+                tu racha crecerá y el pozo aumentará. ¡Cuanto más larga sea 
+                tu racha, mayor será la recompensa!
+                <br>
+                Rompe la racha: Si fallas, perderás tu racha actual 
+                y el pozo se reiniciará. ¡Pero no te desanimes! Siempre 
+                hay una nueva oportunidad para comenzar de nuevo.
+            </p>
+            <button (click)="Start()">Jugar</button>
+        </section>
+    }
+    @else if(gameState === 'playing'){
+    <!-- PUNTOS -->
+        <div class="row row-puntos">
+            <div id="puntos-container">
+                <span id="puntos-total">${{ run.pozo }}</span>
+                <div class="modificador">
+                    <span id="base">{{ run.apuesta }}</span>
+                    <span class="operador"> X </span>
+                    <span id="producto">{{ run.racha }}</span>
                 </div>
-                <!-- CARTAS -->
-                <div class="row row-cards">
-                    <div class="cards-container">
-                        <div class="mazo">
-
-                            <div *ngFor="let card of mazo; let i = index">
-                                <div class="card" #card [ngStyle]="{
-                                    'transform': 'translateX('+ AcomodarMazo(i) +')'}">
-                                    <div class="card__face card__face--front" [ngStyle]="{'background-image': 'url(' + card.frontImg + ')'}"></div>
-                                    <div class="card__face card__face--back"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- APUESTA -->
-                <div class="row row-apuesta"><span>Apuesta ${{run.apuesta}}</span></div>
-                <!-- BOTONES -->
-                <div class="row row-buttons">
-                    <div id="buttons-container">
-                        <span class="odds odds-less">40%</span>
-                        <span class="boton" (click)="RobarCarta('menor')">Menor</span>
-                        <span class="producto">X {{run.racha}}</span>
-                        <span class="boton" (click)="RobarCarta('mayor')">Mayor</span>
-                        <span class="odds odds-more">60%</span>
-                    </div>
-                </div>
-                <!-- BANCA -->
-                <div class="row row-banca">
-                    <div id="banca-container">
-                        <span id="banca-title">Banca</span>
-                        <span id="banca-total">${{run.banca}}</span>
-                    </div>
-                </div>  
-              
             </div>
-        }
-    </section>
-
+        </div>
+        <!-- CARTAS -->
+        <div class="row row-cards">
+            <div class="cards-container">
+                <div class="mazo">
+    
+                    <div *ngFor="let card of mazo; let i = index">
+                        <div class="card" #card [ngStyle]="{
+                            'transform': 'translateX('+ AcomodarMazo(i) +')'}">
+                            <div class="card__face card__face--front" [ngStyle]="{'background-image': 'url(' + card.frontImg + ')'}"></div>
+                            <div class="card__face card__face--back"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- APUESTA -->
+        <div class="row row-apuesta"><span>Apuesta ${{run.apuesta}}</span></div>
+        <!-- BOTONES -->
+        <div class="row row-buttons">
+            <div id="buttons-container">
+                <span class="odds odds-less">40%</span>
+                <span class="boton" (click)="RobarCarta('menor')">Menor</span>
+                <span class="producto">X {{run.racha}}</span>
+                <span class="boton" (click)="RobarCarta('mayor')">Mayor</span>
+                <span class="odds odds-more">60%</span>
+            </div>
+        </div>
+        <!-- BANCA -->
+        <div class="row row-banca">
+            <div id="banca-container">
+                <span id="banca-title">Banca</span>
+                <span id="banca-total">${{run.banca}}</span>
+            </div>
+        </div>  
+    }
 </div>
+
+

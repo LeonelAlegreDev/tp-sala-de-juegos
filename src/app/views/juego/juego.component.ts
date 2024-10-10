@@ -19,7 +19,6 @@ export class JuegoComponent {
   @ViewChild('vcr', { read: ViewContainerRef }) vcr!: ViewContainerRef;
   
   juegosList = [AhorcadoComponent, MayorMenorComponent];
-  isGameStarted: boolean = false;
   private viewportReady$: Observable<boolean>;
   private resizeObserver: ResizeObserver;
 
@@ -79,12 +78,6 @@ export class JuegoComponent {
     
     viewportElement.style.transform = `scale(${scale})`;
     viewportElement.style.transformOrigin = 'center';
-  }
-
-  Start(): void {
-    console.log("Juego iniciado");
-
-    this.isGameStarted = true;
   }
 
   CargarJuego(): void {
