@@ -1,13 +1,44 @@
+#viewport{
+    height: 1000px;
+    min-width: 1000px;
+    min-height: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-
-#wrapper{
+.screen{
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 95vh;
-    width: 95vw;
-    padding: 0 4%;
+    background-color: rgb(255, 150, 150);
+
+    button{
+        width: 250px;
+        border: none;
+        color: black;
+        font-family: "Handjet-Bold";
+        font-size: 3em;
+        padding: 10px 50px;
+        border-radius: 50px;
+        box-shadow: 0 0 10px 2px rgb(0, 0, 0);
+        background-color: var(--primary-color);
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    button:hover{
+        color: var(--primary-color);
+        background-color: black;
+    }
+}
+.screen-start{
+    padding: 0 6%;
+    text-align: center;
 
     h1{
         font-size: 5em;
@@ -24,19 +55,191 @@
         font-family: "Handjet-Regular";
         color: black;
     }
+}
+.screen-playing{
+    justify-content: space-between;
+    background-image: url('../../../../assets/images/ahorcado/playing-background.jpg');
+    background-size: 150% 105%;
+    background-position: 35% bottom;
 
-    button{
-        border: none;
-        color: black;
-        font-family: "Handjet-Bold";
-        font-size: 1.8em;
-        padding: 5px 25px;
-        border-radius: 50px;
-        box-shadow: 0 0 10px 2px rgb(0, 0, 0);
-        background-color: var(--primary-color);
+    
+    #palabra{
+        height: 80px;
+        width: 80%;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Copperplate', cursive;
+        font-weight: bold;
+        font-size: 3em;
+        background-color: rgba(0, 0, 0, 0.3);
+
+        span{
+            margin: 5px;
+        }
+    }
+    #teclado{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        border-radius: 25px;
+
+        background-color: rgba(0, 0, 0, 0.5);
+
+        .row{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 10px;
+        
+            .letra{
+                width: 75px;
+                height: 75px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 10px;
+                text-align: center;
+                font-family: 'Copperplate', cursive;
+                font-weight: bold;
+                font-size: 3em;
+                cursor: pointer;
+                background-color: rgb(183, 183, 183);
+                transition: 0.5s;
+            }
+            .letra:last-child{
+                margin-right: 10px;
+            }
+            .letra:hover{
+                background-color: rgb(255, 255, 255);
+            }
+            .adivinada{
+                background-color: rgb(48, 250, 159);
+                opacity: 0.75;
+            }
+            .adivinada:hover{
+                background-color: rgb(48, 250, 159);
+                cursor: default;
+            }
+            .equivocada{
+                background-color: rgb(255, 88, 88);
+                opacity: 0.75;
+            }
+            .equivocada:hover{
+                background-color: rgb(255, 88, 88);
+                cursor: default;
+            }
+        }
+        .row:last-child{
+            margin-bottom: 10px;
+        }
+    }
+    #character{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: calc(590px / 4.7);
+        height: calc(910px / 4.2);
+
+        top: 31.5%;
+        right: 21.8%;
+        
+        img{
+            width: calc(590px / 4.7);
+            height: calc(910px / 4.2);
+            position: absolute;
+        }
+        #soga{
+            width: 40px;
+            height: 45px;
+            z-index: 2;
+            position: absolute;
+            top: -8.5px;
+            border-radius: 100%;
+            border: 5px solid rgb(2, 182, 71);
+        }
+        svg{
+            z-index: 3;
+            width: 65px;
+            transform: translateY(-15px);
+        }
+        svg path{
+            fill: rgb(117, 53, 255);
+        }
+        .part{
+            opacity: 0.2;
+        }
+        .visible{
+            opacity: 1;
+        }
     }
 }
+.screen-end{
+    position: absolute;
+    width: auto;
+    height: 60%;
+    z-index: 10;
+    padding: 0 20px;
+    color: var(--light-color);
+    background-color: rgba(0, 0, 0, 0.5);
 
-#viewport{
-    background-color: blue;
+    h1{
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: var(--light-color);
+    }
+    h2{
+        font-size: 3em;
+        font-family: "Handjet-Bold";
+        color: var(--light-color);
+    }
+    button:hover{
+        box-shadow: 0 0 10px 2px var(--light-color);
+    }
+}
+.screen-dificult{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    h1{
+        height: 25%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+
+    .column{
+        height: 75%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        button{
+            margin: 30px;
+        }
+    }
+
+}
+.hidden{
+    display: none;
 }

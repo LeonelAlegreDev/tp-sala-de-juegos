@@ -334,10 +334,11 @@
         border: none;
         color: black;
         font-family: "Handjet-Bold";
-        font-size: 1.8em;
-        padding: 5px 25px;
+        font-size: 3em;
+        padding: 10px 50px;
         border-radius: 50px;
         box-shadow: 0 0 10px 2px rgb(0, 0, 0);
         background-color: var(--primary-color);
+        cursor: pointer;
     }
 }
