@@ -18,7 +18,9 @@ export class JuegoComponent {
   @ViewChild('game') gameElement!: ElementRef;
   @ViewChild('vcr', { read: ViewContainerRef }) vcr!: ViewContainerRef;
   
-  juegosList = [AhorcadoComponent, MayorMenorComponent];
+  componentList = [AhorcadoComponent, MayorMenorComponent];
+  juegosList = ["Ahorcado", "MayorMenor"];
+
   private viewportReady$: Observable<boolean>;
   private resizeObserver: ResizeObserver;
 
@@ -82,23 +84,25 @@ export class JuegoComponent {
 
   CargarJuego(): void {
     this.route.paramMap.subscribe(params => {
-      let idJuego = params.get('id')?.replace('-','');      
+      let idJuego = params.get('id')?.replace('-','');
       let component = null;
 
-      this.juegosList.forEach(juego => {
-        // Formatea el nombre del componente para comparar con el id del juego
-        let componentName = juego.name.replace('Component', '').toLowerCase();
-        componentName = componentName.replace('_', '');
+      console.log("idJuego: " + idJuego);
+      console.log("juegosList:");
+      console.log(this.juegosList);
 
-        if (componentName === idJuego) {
+      this.juegosList.forEach(juego => {
+        if (juego.toLocaleLowerCase() === idJuego) {
           component = juego;
         }
       });
 
       if(component){
         this.vcr.clear();
-
-        const compRef = this.vcr.createComponent(component);
+        component = this.componentList[this.juegosList.indexOf(component)];
+        console.log("Cargando componente:");
+        console.log(component);
+        const compRef = this.vcr.createComponent(component as any);
         compRef.changeDetectorRef.detectChanges();
       }
       else {
