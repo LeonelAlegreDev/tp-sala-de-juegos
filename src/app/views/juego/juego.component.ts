@@ -5,6 +5,8 @@ import { NgFor, NgStyle } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AhorcadoComponent } from '../../components/juegos/ahorcado/ahorcado.component';
 import { MayorMenorComponent } from '../../components/juegos/mayor-menor/mayor-menor.component';
+import { PreguntadosComponent } from '../../components/juegos/preguntados/preguntados.component';
+import { SpaceInvadersComponent } from '../../components/juegos/space-invaders/space-invaders.component';
 
 @Component({
   selector: 'app-juego',
@@ -18,8 +20,8 @@ export class JuegoComponent {
   @ViewChild('game') gameElement!: ElementRef;
   @ViewChild('vcr', { read: ViewContainerRef }) vcr!: ViewContainerRef;
   
-  componentList = [AhorcadoComponent, MayorMenorComponent];
-  juegosList = ["Ahorcado", "MayorMenor"];
+  componentList = [AhorcadoComponent, MayorMenorComponent, PreguntadosComponent, SpaceInvadersComponent];
+  juegosList = ["Ahorcado", "MayorMenor", "Preguntados", "SpaceInvaders"];
 
   private viewportReady$: Observable<boolean>;
   private resizeObserver: ResizeObserver;
@@ -87,10 +89,6 @@ export class JuegoComponent {
       let idJuego = params.get('id')?.replace('-','');
       let component = null;
 
-      console.log("idJuego: " + idJuego);
-      console.log("juegosList:");
-      console.log(this.juegosList);
-
       this.juegosList.forEach(juego => {
         if (juego.toLocaleLowerCase() === idJuego) {
           component = juego;
@@ -98,10 +96,9 @@ export class JuegoComponent {
       });
 
       if(component){
+        console.log("Cargando juego:", idJuego);
         this.vcr.clear();
         component = this.componentList[this.juegosList.indexOf(component)];
-        console.log("Cargando componente:");
-        console.log(component);
         const compRef = this.vcr.createComponent(component as any);
         compRef.changeDetectorRef.detectChanges();
       }
