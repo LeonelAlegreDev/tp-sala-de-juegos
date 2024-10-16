@@ -213,8 +213,9 @@ a{
         background-color: rgba(0, 0, 0, 0.6);
     }
 
-    button:ho5ver{
-        background-color: rgba(0, 0, 0, 0.8);
+    button:hover{
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.9);
     }
 }
 

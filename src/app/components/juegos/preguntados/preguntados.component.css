@@ -1,0 +1,176 @@
+#viewport{
+    height: 1000px;
+    min-width: 1000px;
+    min-height: 1000px;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+.screen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(255, 150, 150);
+    overflow: visible;
+
+    h1{
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    h2{
+        font-size: 3em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+}
+.screen-playing{
+    justify-content: space-between;
+
+    .roulette-wrapper{
+        position:relative;
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        width:100%;
+        height: 120px;
+        margin:0 auto;
+        overflow:hidden;
+        overflow: hidden;
+
+        .selector{
+            width:3px;
+            background:black;
+            left:50%;
+            height:100%;
+            transform:translate(-50%,0%);
+            position:absolute;
+            z-index:2;
+        }
+        .wheel{
+            display:flex;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: rgb(71, 71, 71);
+        }
+        .row{
+            position: absolute;
+            min-width: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            flex-wrap: nowrap;
+        }
+        .row:nth-child(2){
+            left: 50%;
+        }
+        .row:nth-child(3){
+            left: 100%;
+        }
+        .row-animate-constant{
+            animation: Spin backwards infinite linear;
+        }
+        .card{
+            height: 83.328px;
+            width: 100%;
+            margin: 3px;
+            border-radius: 10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:1.5em;
+            box-sizing: content-box;
+            box-sizing: border-box;
+            background-color: rgb(145, 145, 145);
+            /* background-image: url("../../../../assets/images/preguntados/arte-icon.png");        */
+            background-size: cover;
+        }  
+    }
+    .container{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+    }
+    .spin-screen{
+        #info{
+            height: 50%;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+    
+            .field{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        #buttonContainer{
+            width: 100%;
+            height: 10%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+    
+            button{
+                width: auto;
+                border: none;
+                color: black;
+                font-family: "Handjet-Bold";
+                font-size: 3em;
+                padding: 10px 50px;
+                border-radius: 50px;
+                box-shadow: 0 0 10px 2px rgb(0, 0, 0);
+                background-color: var(--primary-color);
+                cursor: pointer;
+                transition: 0.5s;
+            }
+            button:hover{
+                color: var(--primary-color);
+                background-color: black;
+            }
+            button:disabled{
+                opacity: 0.7;
+                cursor: default;
+            }
+        }
+        .categoria{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+    }
+    .answer-screen{
+        justify-content: flex-start;
+        background-color: red;
+    }
+}
+
+@keyframes Spin{
+    0%{
+        transform:translateX(0%);
+    }
+    100%{
+        transform:translateX(-100%);
+    }
+}

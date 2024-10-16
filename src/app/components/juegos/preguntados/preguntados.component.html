@@ -1,1 +1,79 @@
-<p>preguntados works!</p>
+<div id="viewport" #viewport>
+    @if(gameState === 'start'){
+        <section class="screen screen-start">
+            <h1>Preguntados</h1>
+            <h2>¡Pon a prueba tus conocimientos!</h2>
+            <p>
+                ¿Crees que sabes mucho? ¡Demuéstralo! 
+                <br>
+                Responde preguntas de diferentes categorías y 
+                niveles de dificultad. 
+                <br>
+                <strong>¿Lograrás responder todas las preguntas?</strong>
+            </p>
+            <button (click)="Start()">Jugar</button>
+        </section>
+    }
+    @else if(gameState === 'gameOver'){
+        <p>game over</p>
+    }
+    @else{
+        <section class="screen screen-playing">
+            <div class='roulette-wrapper'>
+                <div class='selector' #selector></div>
+                <div class='wheel' #wheel>
+                    <div class="row" #row>
+                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
+                        [attr.data-categoria]="tarjeta.categoria" 
+                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
+                        </div>
+                    </div>
+                    <div class="row" #row>
+                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
+                        [attr.data-categoria]="tarjeta.categoria" 
+                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
+                        </div>
+                    </div>
+                    <div class="row" #row>
+                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
+                        [attr.data-categoria]="tarjeta.categoria" 
+                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @if(gameState === 'girando'){
+                <section class="container spin-screen">
+                    <div id="info">
+                        <div class="field">
+                            <h2>Puntos</h2>
+                            <h2 class="valor">{{0}}</h2>
+                        </div>
+                        <div class="field">
+                            <h2>Racha de aciertos</h2>
+                            <h2 class="valor">{{0}}</h2>
+                        </div>
+                        <div class="field">
+                            <h2>Vidas</h2>
+                            <h2 class="valor">{{ run.vidas }}</h2>
+                        </div>
+                    
+                    </div>
+                    
+                    <div id="buttonContainer">
+                        <button (click)="SpinWheel()" [disabled]="!canSpin">Spin Wheel</button>
+                    </div>
+                    
+                    <h1 class="categoria">{{ run.categoria }}</h1>
+                </section>
+            }
+            @else if (gameState === 'respondiendo') {
+                <section class="container answer-screen">
+                    <h1>{{ run.categoria }}</h1>
+                </section>
+            }
+
+        </section>
+    }
+</div>

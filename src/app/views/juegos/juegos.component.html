@@ -62,7 +62,7 @@
                         </p>
                     </div>
                     <div class="buttons">
-                        <button>Jugar Ahora</button>
+                        <button routerLink="./preguntados" routerLinkActive="active-route">Jugar Ahora</button>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                         </p>
                     </div>
                     <div class="buttons">
-                        <button>Jugar Ahora</button>
+                        <button routerLink="./space-invaders" routerLinkActive="active-route">Jugar Ahora</button>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@
             </div>
 
             <!-- PREGUNTADOS -->
-            <div #listThumb class="item">
+            <div #listThumb class="item" routerLink="./preguntados" routerLinkActive="active-route">
                 <img src="../../../assets/images/preguntados-thumbnail.jpg">
                 <div class="content">
                     <h2 class="title">
@@ -133,7 +133,7 @@
             </div>
 
             <!-- SPACE INVADERS -->
-            <div #listThumb class="item">
+            <div #listThumb class="item" routerLink="./space-invaders" routerLinkActive="active-route">
                 <img src="../../../assets/images/space-invaders-thumbnail.jpg">
                 <div class="content">
                     <h2 class="title">Space Invaders</h2>
