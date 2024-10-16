@@ -1,5 +1,6 @@
 import { NgFor, NgStyle } from '@angular/common';
-import { Component, ElementRef, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
+import { MarvelService } from '../../../services/marvel.service';
 
 @Component({
   selector: 'app-preguntados',
@@ -12,6 +13,7 @@ export class PreguntadosComponent {
   @ViewChildren('row') rowElements!: QueryList<ElementRef>;
   @ViewChildren('card') cardElements!: QueryList<ElementRef>;
   @ViewChild('selector') selector!: ElementRef;
+  private marvelService = inject(MarvelService);
 
   gameStateList = ['start', 'girando', 'respondiendo', 'gameOver'];
   gameState = this.gameStateList[0];
@@ -47,8 +49,6 @@ export class PreguntadosComponent {
     categoria: '',
     vidas: 3
   };
-
-  // TODO: Crear urls de imagenes para las categorias
 
   Start(){
     console.log("Juego iniciado");
@@ -101,7 +101,12 @@ export class PreguntadosComponent {
       setTimeout(() => {
         console.log("Seleccionando pregunta");
         this.gameState = this.gameStateList[2]; // respondiendo
+        this.CrearPreguntaMarvel();
       }, 2000);
     }, duracion);
+  }
+
+  CrearPreguntaMarvel(){
+    this.marvelService.GetCharacters();
   }
 }
