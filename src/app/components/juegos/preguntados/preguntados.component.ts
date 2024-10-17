@@ -1,6 +1,7 @@
 import { NgFor, NgStyle } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
 import { MarvelService } from '../../../services/marvel.service';
+import { PokemonService } from '../../../services/pokemon.service';
 
 @Component({
   selector: 'app-preguntados',
@@ -14,6 +15,7 @@ export class PreguntadosComponent {
   @ViewChildren('card') cardElements!: QueryList<ElementRef>;
   @ViewChild('selector') selector!: ElementRef;
   private marvelService = inject(MarvelService);
+  private pokemonService = inject(PokemonService);
 
   gameStateList = ['start', 'girando', 'respondiendo', 'gameOver'];
   gameState = this.gameStateList[0];
@@ -49,6 +51,16 @@ export class PreguntadosComponent {
     categoria: '',
     vidas: 3
   };
+  marvelData: any = {
+    characters: []
+  };
+
+  pregunta: any = {
+    consigna: '',
+    opciones: [],
+    img: '',
+    opcionCorrecta: ''
+  }
 
   Start(){
     console.log("Juego iniciado");
@@ -101,12 +113,64 @@ export class PreguntadosComponent {
       setTimeout(() => {
         console.log("Seleccionando pregunta");
         this.gameState = this.gameStateList[2]; // respondiendo
-        this.CrearPreguntaMarvel();
+        // this.CrearPreguntaMarvel();
+        this.CrearPreguntaPokemon();
       }, 2000);
     }, duracion);
   }
 
-  CrearPreguntaMarvel(){
-    this.marvelService.GetCharacters();
+  CrearPreguntaPokemon(){
+    const result = this.pokemonService.GetPokemons();
+    this.pregunta.consigna = "¿Como se llama este pokemon?";
+
+    result.subscribe((result: any) => {
+      const indexCorrecto = Math.floor(Math.random() * result.length);
+      this.pregunta.opcionCorrecta = result[indexCorrecto].name;
+      this.pregunta.opciones.push(this.pregunta.opcionCorrecta);
+      this.pregunta.img = result[indexCorrecto].image;
+      let findOpcion = false;
+
+      // Agrega 3 opciones incorrectas
+      for(let i = 0; i < 3; i++){
+        let opcionAleatoria = result[Math.floor(Math.random() * result.length)].name;
+        
+        do{
+          // Verifica que la opcion no se repita
+          if(this.pregunta.opciones.includes(opcionAleatoria)){
+            findOpcion = false;
+            opcionAleatoria = result[Math.floor(Math.random() * result.length)].name;
+          }
+          else findOpcion = true;
+        }while(!findOpcion);
+
+        this.pregunta.opciones.push(opcionAleatoria);
+      }
+      console.log(this.pregunta)
+    });
   }
+
+  ElegirOpcion(opcion: string){
+    console.log("Opcion elegida: ", opcion);
+    if(opcion === this.pregunta.opcionCorrecta){
+      console.log("Respuesta correcta");
+    }
+    else{
+      console.log("Respuesta incorrecta");
+      this.run.vidas--;
+      if(this.run.vidas === 0){
+        console.log("Fin del juego");
+        this.gameState = this.gameStateList[3]; // gameOver
+      }
+    }
+  }
+
+  
+  // CrearPreguntaMarvel(){
+  //   let characters: any;
+
+  //   this.marvelService.GetCharacters().subscribe(characters => {
+  //     this.marvelData.characters = characters;
+  //     console.log(this.marvelData.characters);
+  //   });
+  // }
 }

@@ -72,13 +72,19 @@
                 <section class="container answer-screen">
                     <h1>{{ run.categoria }}</h1>
                     <div class="pregunta">
-                        Quien so vo?
+                        @if(pregunta.img !== ''){
+                          <h2>{{ pregunta.consigna }}</h2>
+                          <div class="img" [ngStyle]="{'background-image': 'url(' + pregunta.img+ ')'}"></div>
+                        }
+                        @else {
+                            <h2>{{ pregunta.consigna }}</h2>
+                        }
                     </div>
                     <div class="opciones">
-                        <span class="opcion">A</span>
-                        <span class="opcion">B</span>
-                        <span class="opcion">C</span>
-                        <span class="opcion">D</span>
+                        <span class="opcion" (click)="ElegirOpcion(pregunta.opciones[0])">{{ pregunta.opciones[0] }}</span>
+                        <span class="opcion" (click)="ElegirOpcion(pregunta.opciones[1])">{{ pregunta.opciones[1] }}</span>
+                        <span class="opcion" (click)="ElegirOpcion(pregunta.opciones[2])">{{ pregunta.opciones[2] }}</span>
+                        <span class="opcion" (click)="ElegirOpcion(pregunta.opciones[3])">{{ pregunta.opciones[3] }}</span>
                     </div>
                 </section>
             }
