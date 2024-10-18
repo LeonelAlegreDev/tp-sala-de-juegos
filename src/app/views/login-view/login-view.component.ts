@@ -63,7 +63,7 @@ export class LoginViewComponent {
         await this.auth.Login(this.form.value.email, this.form.value.password);
         console.log("Usuario logeado con exito");
         this.form_error = '';
-        this.router.navigate(['/home']);
+        this.router.navigate(['/juegos']);
       }
       catch (error: any) {
         if(error.message === "Credenciales invalidas"){

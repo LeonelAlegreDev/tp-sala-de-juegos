@@ -1,4 +1,12 @@
 <div id="viewport" #viewport>
+    <!-- MODAL -->
+    <div class="modal" (click)="onModalClick($event)" #modal>
+        <div class="card">
+            <h2>{{ modalData.header }}</h2>
+            <p>{{ modalData.body }}</p>
+            <button (click)="Continuar()">{{ modalData.buttonText }}</button>
+        </div>
+    </div>
     @if(gameState === 'start'){
         <section class="screen screen-start">
             <h1>Preguntados</h1>
@@ -13,9 +21,6 @@
             </p>
             <button (click)="Start()">Jugar</button>
         </section>
-    }
-    @else if(gameState === 'gameOver'){
-        <p>game over</p>
     }
     @else{
         <section class="screen screen-playing">
@@ -45,14 +50,28 @@
             
             @if(gameState === 'girando'){
                 <section class="container spin-screen">
+                    <h1 class="categoria">{{ run.categoria }}</h1>
+
                     <div id="info">
                         <div class="field">
-                            <h2>Puntos</h2>
-                            <h2 class="valor">{{0}}</h2>
+                            <h2>Puntos:</h2>
+                            <h2 class="valor">{{ run.puntos }}</h2>
                         </div>
                         <div class="field">
-                            <h2>Racha de aciertos</h2>
-                            <h2 class="valor">{{0}}</h2>
+                            <h2>Racha de aciertos:</h2>
+                            <h2 class="valor">{{ run.racha }}</h2>
+                        </div>
+                        <div class="field">
+                            <h2>Mayor racha de aciertos:</h2>
+                            <h2 class="valor">{{ run.maxRacha }}</h2>
+                        </div>
+                        <div class="field">
+                            <h2>Preguntas acertadas:</h2>
+                            <h2 class="valor">{{ run.preguntasAcertadas }}</h2>
+                        </div>
+                        <div class="field">
+                            <h2>Preguntas respondidas:</h2>
+                            <h2 class="valor">{{ run.preguntasRespondidas }}</h2>
                         </div>
                         <div class="field">
                             <h2>Vidas</h2>
@@ -63,9 +82,7 @@
                     
                     <div id="buttonContainer">
                         <button (click)="SpinWheel()" [disabled]="!canSpin">Spin Wheel</button>
-                    </div>
-                    
-                    <h1 class="categoria">{{ run.categoria }}</h1>
+                    </div>                    
                 </section>
             }
             @else if (gameState === 'respondiendo') {

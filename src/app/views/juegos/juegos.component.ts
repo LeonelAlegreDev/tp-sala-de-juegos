@@ -1,6 +1,8 @@
-import { Component, ViewChildren, QueryList, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ViewChildren, QueryList, ElementRef, Renderer2, ViewChild, inject } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-juegos',
@@ -16,6 +18,7 @@ export class JuegosComponent {
   @ViewChildren('list') listContainer!: QueryList<ElementRef>;
   @ViewChildren('thumbnail') thumbnailContainer!: QueryList<ElementRef>;
   @ViewChild('carousel') carousel!: ElementRef;
+  authService = inject(AuthService);
 
 
   animationDelay = 3000; // Duración de la animación en ms
@@ -40,6 +43,11 @@ export class JuegosComponent {
 
     this.GoNextAuto();
   }
+  ngOnDestroy() {
+    if (this.runNextAuto) {
+      clearTimeout(this.runNextAuto);
+    }
+  }
 
   GoNext(){
     this.ShowSlider('next');
@@ -48,7 +56,7 @@ export class JuegosComponent {
     this.ShowSlider('prev');
   }
   GoNextAuto(){
-    this.runNextAuto = setTimeout(() => {
+    this.runNextAuto = setTimeout(() => {      
       this.GoNext();
     }, this.autoTime);
   }

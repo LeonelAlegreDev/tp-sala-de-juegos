@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor(private auth: Auth) { }
 
-  IsLoggedIn() {
+  public IsLoggedIn() {
     return this.isLoggedIn;
   }
 
