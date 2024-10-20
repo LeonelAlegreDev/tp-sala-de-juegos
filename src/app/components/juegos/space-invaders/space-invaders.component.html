@@ -1,3 +1,20 @@
 <div id="viewport" #viewport>
-    <p>space invader</p>
+    @if(gameState === 'start'){
+        <section class="screen screen-start">
+            <h1>Space Invaders</h1>
+            <h2>¡Defiende la galaxia!</h2>
+            <p>
+                Enfréntate a oleadas de invasores espaciales y 
+                protege tu nave de los ataques enemigos. 
+                <br>
+                <strong>¿Podrás derrotar a todos los invasores y salvar la galaxia?</strong>         
+            </p>
+            <button (click)="Start()">Jugar</button>
+        </section>
+    }
+    @else if(gameState === 'playing'){
+        <section class="screen screen-playing">
+            <canvas #canvas></canvas>
+        </section>
+    }
 </div>

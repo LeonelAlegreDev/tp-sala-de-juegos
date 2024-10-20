@@ -8,4 +8,60 @@
     justify-content: center;
     align-items: center;
     overflow: visible;
+    background-color: rgb(9, 0, 32);
 }
+.screen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(255, 150, 150);
+    overflow: visible;
+
+    h1{
+        font-size: 5em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+    h2{
+        font-size: 3em;
+        font-family: "Handjet-Bold";
+        color: black;
+    }
+}
+.screen-start{
+    justify-content: space-evenly;
+    h2{
+        font-size: 3.5em;
+        font-family: "Handjet-Bold";
+        color: black;
+        text-align: center;
+    }
+    p{
+        font-size: 2.8em;
+        font-family: "Handjet-Bold";
+        color: black;
+        text-align: center;
+    }
+    button{
+        font-size: 3.5em;
+        font-family: "Handjet-Bold";
+        border: none;
+        background-color: var(--primary-color);
+        padding: 15px 55px;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0 10px 2px rgb(0, 0, 0);
+        transition: 0.5s;
+    }
+    button:hover{
+        color: var(--primary-color);
+        background-color: black;
+    }
+}
+/* canvas{
+    width: 100%;
+    height: 100%;
+} */
