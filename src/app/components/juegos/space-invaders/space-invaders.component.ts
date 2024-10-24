@@ -30,14 +30,20 @@ export class SpaceInvadersComponent {
     width: 40,
     height: 40,
     speed: 6,
-    shotDelay: 10, // ms
+    shotDelay: 500, // ms
     canShoot: true,
     bulletSpeed: 4,
     bullets: [] as Bullet[],
   };
   private enemies: Enemy[] = [];
+  private enemiesBullets: Bullet[] = [];
   private fuertes: Fuerte[] = [];
   private spriteMap: HTMLImageElement;
+  private enemyMovementCoordinator = {
+    goRight: true,
+    goLeft: false,
+    goDown: false,
+  }
 
   constructor() { 
     this.spriteMap = new Image();
@@ -64,7 +70,6 @@ export class SpaceInvadersComponent {
       this.gameLoop(this.lastTime);
     }, 100);
   }
-
   
   gameLoop(currentTime: number): void {
     this.deltaTime = currentTime - this.lastTime;
@@ -127,7 +132,6 @@ export class SpaceInvadersComponent {
     if(this.keys[' ']){
       if(this.player.canShoot){
         this.player.canShoot = false;
-        console.log('Disparo');
         this.Disparar();
 
         setTimeout(() => {
@@ -217,7 +221,7 @@ export class SpaceInvadersComponent {
           colisionY: colisionY,
           frameIndex: 0,
           animationTimer: 0,
-          direction: 1,
+          speedList: [1, 1.8, 2.5, 3.5, 5]
         };
         this.enemies.push(enemy);
       }
@@ -241,62 +245,115 @@ export class SpaceInvadersComponent {
         enemy.animationTimer = 0;
       }
     });
+    this.enemiesBullets.forEach((bullet: Bullet, index: number) => {
+      this.ctx!.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+      bullet.y += bullet.speed;
+      if(bullet.y < 0){
+        this.player.bullets.splice(index, 1);
+      }
+    });
   }
 
   UpdateEnemies(): void {
-    this.enemies.forEach((enemy, enemyIndex) => {
-      
+    // Se habilita el disparo de un enemigo aleatorio
+    if (this.lastTime - this.deltaTime >= 5000) {
+      const randomIndex = Math.floor(Math.random() * this.enemies.length);
+      this.enemies[randomIndex].canShoot = true;
+      this.lastTime = this.lastTime;
+    }
+
+    // Actauliza el estado de los enemigos
+    for(let i = 0; i < this.enemies.length; i++){
+      let bulletCollision = false;
       // Comprueba la colision con las balas
-      this.player.bullets.forEach((bullet, bulletIndex) => {
-        if (this.IsColliding(enemy, bullet)) {
+      for(let j = 0; j < this.player.bullets.length; j++){
+        // Valida si la bala colisiona con un enemigo
+        if(this.IsColliding(this.enemies[i], this.player.bullets[j])){
           // Eliminar la bala y el enemigo
-          this.player.bullets.splice(bulletIndex, 1);
-          this.enemies.splice(enemyIndex, 1);
-          console.log(this.enemies.length)
+          this.player.bullets.splice(j, 1);
+          this.enemies.splice(i, 1);
           // Incrementar puntos o cualquier otra lógica de juego
           this.run.puntos += 10;
-          return;
+          bulletCollision = true;
+          break;
         }
-      });
+      }
+      if(bulletCollision) continue;
 
-      if(this.enemies.length === 1){
-        enemy.speed = enemy.maxSpeed * enemy.direction;
+      // Aumenta la velocidad de los enemigos segun la cantidad de enemigos restantes
+      if(this.enemies.length <= 40 && this.enemies.length > 30){
+        this.enemies[i].speed = this.enemies[1].speedList[1];
+      }
+      else if(this.enemies.length <= 30 && this.enemies.length > 20){
+        this.enemies[i].speed = this.enemies[1].speedList[2];
+      }
+      else if(this.enemies.length <= 20 && this.enemies.length > 1){
+        this.enemies[i].speed = this.enemies[1].speedList[3];
+      }
+      if(this.enemies.length === 1) {
+        this.enemies[i].speed = this.enemies[1].speedList[4];
       }
 
-      // Mueve a los enemigos hacia la izquierda hasta el borde del canvas
-      enemy.x += enemy.speed * enemy.direction;
-      enemy.colisionX += enemy.speed * enemy.direction;
-      // Si un enemigo llega al borde del canvas, cambia la dirección y baja
-      // if (enemy.colisionX + enemy.colisionWidth >= this.canvasElement.nativeElement.width || enemy.colisionX <= 0) {
-      //   this.enemies.forEach(enemy => {
-      //     enemy.speed *= direction;
-      //     enemy.y += 20;
-      //     enemy.colisionY += 20;
-      //   });
-      // }
-
-      // Si un enemigo llega al borde del canvas, cambia la dirección y baja
-      if (enemy.colisionX + enemy.colisionWidth > this.canvasElement.nativeElement.width) {
-        this.enemies.forEach(enemy => {
-          if(enemy.colisionX + enemy.colisionWidth > this.canvasElement.nativeElement.width){
-            enemy.x = this.canvasElement.nativeElement.width - enemy.x;
-            enemy.colisionWidth = this.canvasElement.nativeElement.width - enemy.colisionWidth;
-          }
-          enemy.direction *= -1;
-          enemy.x += enemy.speed * enemy.direction;
-          enemy.colisionX += enemy.speed * enemy.direction;
-        });
-      } 
-      else if (enemy.colisionX <= 0) {
-        this.enemies.forEach(enemy => {
-          enemy.speed *= -1;
-          enemy.y += 20;
-          enemy.colisionY += 20;
-        });
+      // Mueve el enemigo hacia abajo
+      if(this.enemyMovementCoordinator.goDown){
+        this.enemies[i].y += 10;
+        this.enemies[i].colisionY += 10;
+      }
+      // Cancela el movimiento hacia abajo si es el ultimo enemigo
+      if(i === this.enemies.length - 1){
+        this.enemyMovementCoordinator.goDown = false;
+      }
+      // Mueve el enemigo hacia la derecha
+      if(this.enemyMovementCoordinator.goRight){
+        this.enemies[i].x += this.enemies[i].speed;
+        this.enemies[i].colisionX += this.enemies[i].speed;
+      }
+      // Mueve el enemigo hacia la izquierda
+      if(this.enemyMovementCoordinator.goLeft){
+        this.enemies[i].x -= this.enemies[i].speed;
+        this.enemies[i].colisionX -= this.enemies[i].speed;
       }
 
+      // TODO: Validar si el enemigo puede disparar
+      // Y ejecutar la lógica de disparo
+      
+      if(this.enemies[i].canShoot){
+        this.DispararEnemigo(this.enemies[i]);
+        this.enemies[i].canShoot = false;
+      }
 
-    });
+      // Cambia los estados del coordinador de movimiento segun la colision
+      if(this.isCollidingRight(this.enemies[i])){
+        this.enemyMovementCoordinator.goLeft = true;
+        this.enemyMovementCoordinator.goRight = false;
+        this.enemyMovementCoordinator.goDown = true;
+        break;
+      }
+      if(this.isCollidingLeft(this.enemies[i])){
+        this.enemyMovementCoordinator.goLeft = false;
+        this.enemyMovementCoordinator.goRight = true;
+        this.enemyMovementCoordinator.goDown = true;
+        break;
+      }
+    }
+    // Actualiza el estado de las balas de los enemigos
+  }
+
+  isCollidingRight(enemy: Enemy){
+    return enemy.colisionX + enemy.colisionWidth >= this.canvasElement.nativeElement.width;
+  }
+  isCollidingLeft(enemy: Enemy){
+    return enemy.colisionX <= 0;
+  }
+  DispararEnemigo(enemy: Enemy){
+    const bullet: Bullet = {
+      x: enemy.x + enemy.width / 2,
+      y: enemy.y + enemy.height,
+      width: 9,
+      height: 20,
+      speed: enemy.bulletSpeed,
+    }
+    this.enemiesBullets.push(bullet);
   }
 
   IsColliding(enemy: Enemy, bullet: Bullet): boolean {
@@ -307,6 +364,7 @@ export class SpaceInvadersComponent {
       bullet.y + bullet.height > enemy.colisionY
     );
   }
+
 
   CreateFuertes(){
     const margin = 80;
@@ -407,6 +465,7 @@ interface Enemy{
   speed: number;
   maxSpeed: number;
   bulletSpeed: number;
+  speedList: number[];
   canShoot: boolean;
   shootDelay: number;
   sprites: any;
@@ -416,7 +475,7 @@ interface Enemy{
   colisionHeight: number;
   frameIndex: number;
   animationTimer: number;
-direction: number;
+
 }
 interface Fuerte{
 x: number;
