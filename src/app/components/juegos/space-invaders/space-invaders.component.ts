@@ -13,9 +13,7 @@ export class SpaceInvadersComponent {
   gameStateList = ['start', 'playing', 'pause','game-over'];
   gameState = this.gameStateList[0];
   run = {
-    vidas: 3,
     puntos: 0,
-    velocidadEnemigos: 1,
   }
   private ctx: CanvasRenderingContext2D | null = null;
   private animationFrameId: number = 0;
@@ -30,10 +28,11 @@ export class SpaceInvadersComponent {
     width: 40,
     height: 40,
     speed: 6,
-    shotDelay: 500, // ms
+    shotDelay: 100, // ms
     canShoot: true,
     bulletSpeed: 4,
     bullets: [] as Bullet[],
+    vidas: 3,
   };
   private enemies: Enemy[] = [];
   private enemiesBullets: Bullet[] = [];
@@ -44,6 +43,7 @@ export class SpaceInvadersComponent {
     goLeft: false,
     goDown: false,
   }
+  private lastShootTimeEnemy: number = 0;
 
   constructor() { 
     this.spriteMap = new Image();
@@ -53,9 +53,7 @@ export class SpaceInvadersComponent {
   Start(){
     this.gameState = this.gameStateList[1]; // playing
     this.run = {
-      vidas: 3,
       puntos: 0,
-      velocidadEnemigos: 1,
     }
     this.CreateEnemies();
     this.CreateFuertes();
@@ -213,7 +211,6 @@ export class SpaceInvadersComponent {
           maxSpeed: 5,
           bulletSpeed: 2,
           canShoot: false,
-          shootDelay: 1000,
           sprites: frames,
           colisionWidth: colisionWidth,
           colisionHeight: colisionHeight,
@@ -247,25 +244,32 @@ export class SpaceInvadersComponent {
     });
     this.enemiesBullets.forEach((bullet: Bullet, index: number) => {
       this.ctx!.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-      bullet.y += bullet.speed;
-      if(bullet.y < 0){
-        this.player.bullets.splice(index, 1);
-      }
     });
   }
 
   UpdateEnemies(): void {
-    // Se habilita el disparo de un enemigo aleatorio
-    if (this.lastTime - this.deltaTime >= 5000) {
+    // Acumula tiempo para el disparo de los enemigos
+    this.lastShootTimeEnemy += this.deltaTime;
+    // Cada 2 segundos un enemigo aleatorio dispara
+    if (this.lastShootTimeEnemy >= 1000 && this.enemies.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.enemies.length);
-      this.enemies[randomIndex].canShoot = true;
-      this.lastTime = this.lastTime;
+      // this.enemies[randomIndex].canShoot = true;
+      // this.DispararEnemigo(this.enemies[randomIndex]); 
+      // this.enemies[17].canShoot = true;
+      // this.DispararEnemigo(this.enemies[17]); 
+      this.enemies[11].canShoot = true;
+      this.DispararEnemigo(this.enemies[11]); 
+      // this.enemies[14].canShoot = true;
+      // this.DispararEnemigo(this.enemies[14]); 
+      // CHANGE
+
+      this.lastShootTimeEnemy = 0;
     }
 
     // Actauliza el estado de los enemigos
     for(let i = 0; i < this.enemies.length; i++){
       let bulletCollision = false;
-      // Comprueba la colision con las balas
+      // Comprueba la colision con las balas del jugador
       for(let j = 0; j < this.player.bullets.length; j++){
         // Valida si la bala colisiona con un enemigo
         if(this.IsColliding(this.enemies[i], this.player.bullets[j])){
@@ -280,6 +284,7 @@ export class SpaceInvadersComponent {
       }
       if(bulletCollision) continue;
 
+      this.enemies[i].speed = 0;
       // Aumenta la velocidad de los enemigos segun la cantidad de enemigos restantes
       if(this.enemies.length <= 40 && this.enemies.length > 30){
         this.enemies[i].speed = this.enemies[1].speedList[1];
@@ -291,7 +296,7 @@ export class SpaceInvadersComponent {
         this.enemies[i].speed = this.enemies[1].speedList[3];
       }
       if(this.enemies.length === 1) {
-        this.enemies[i].speed = this.enemies[1].speedList[4];
+        this.enemies[i].speed = this.enemies[i].speedList[4];
       }
 
       // Mueve el enemigo hacia abajo
@@ -313,15 +318,6 @@ export class SpaceInvadersComponent {
         this.enemies[i].x -= this.enemies[i].speed;
         this.enemies[i].colisionX -= this.enemies[i].speed;
       }
-
-      // TODO: Validar si el enemigo puede disparar
-      // Y ejecutar la lógica de disparo
-      
-      if(this.enemies[i].canShoot){
-        this.DispararEnemigo(this.enemies[i]);
-        this.enemies[i].canShoot = false;
-      }
-
       // Cambia los estados del coordinador de movimiento segun la colision
       if(this.isCollidingRight(this.enemies[i])){
         this.enemyMovementCoordinator.goLeft = true;
@@ -336,7 +332,35 @@ export class SpaceInvadersComponent {
         break;
       }
     }
+
     // Actualiza el estado de las balas de los enemigos
+    for(let i = 0; i < this.enemiesBullets.length; i++){
+      // Muve la bala hacia abajo
+      this.enemiesBullets[i].y += this.enemiesBullets[i].speed;
+
+      // Comprueba si la bala sale del canvas
+      if(this.enemiesBullets[i].y > this.canvasElement.nativeElement.height){
+        this.enemiesBullets.splice(i, 1);
+      }
+      // Comprueba si la bala colisiona con el jugador
+      else if(this.enemiesBullets[i].y + this.enemiesBullets[i].height >= this.player.y &&
+              this.enemiesBullets[i].y <= this.player.y + this.player.height &&
+              this.enemiesBullets[i].x >= this.player.x && 
+              this.enemiesBullets[i].x <= this.player.x + this.player.width)
+      {
+        this.enemiesBullets.splice(i, 1);
+        this.player.vidas--;
+      }
+      
+      if(!this.enemiesBullets[i]) break;
+
+      // Compruba si la bala colisiona con un fuerte
+      let deleteBullet = this.DetectarColisionFuerte(this.enemiesBullets[i]);
+
+      if(deleteBullet){
+        this.enemiesBullets.splice(i, 1);
+      }
+    }
   }
 
   isCollidingRight(enemy: Enemy){
@@ -353,7 +377,11 @@ export class SpaceInvadersComponent {
       height: 20,
       speed: enemy.bulletSpeed,
     }
-    this.enemiesBullets.push(bullet);
+    if(enemy.canShoot){
+      this.enemiesBullets.push(bullet);
+      enemy.canShoot = false;
+    }
+    else console.log("No puede disparar");
   }
 
   IsColliding(enemy: Enemy, bullet: Bullet): boolean {
@@ -363,6 +391,51 @@ export class SpaceInvadersComponent {
       bullet.y < enemy.colisionY + enemy.colisionHeight &&
       bullet.y + bullet.height > enemy.colisionY
     );
+  }
+
+  DetectarColisionFuerte(bullet: Bullet) :boolean{
+    let isColliding = false;
+
+    for(let i = 0; i < this.fuertes.length; i++){
+      // Determina si esta en el rango de Y
+      if(bullet.y + bullet.height >= this.fuertes[i].y &&
+         bullet.y <= this.fuertes[i].y + this.fuertes[i].height)
+      {
+        // Determina si esta en el rango de X
+        if((bullet.x >= this.fuertes[i].x || bullet.x + bullet.width >= this.fuertes[i].x) && 
+            bullet.x <= this.fuertes[i].x + this.fuertes[i].width)
+        {
+          // Calcula si colisiona con 2 chunks al mismo tiempo, o si colisiona con un solo chunk 
+          let chunkXLeft = (bullet.x - this.fuertes[i].x) / this.fuertes[i].chunckWidt;
+          let chunkXRight = (bullet.x + bullet.width - this.fuertes[i].x) / this.fuertes[i].chunckWidt;
+          console.log("ChunkLeft: ", chunkXLeft);
+          console.log("ChunkRight: ", chunkXRight);
+
+          let roundedChunkXLeft = Math.floor(chunkXLeft);
+          let roundedChunkXRight = Math.floor(chunkXRight);
+          console.log("RoundedChunkLeft: ", roundedChunkXLeft);
+          console.log("RoundedChunkRight: ", roundedChunkXRight);
+          
+          if(roundedChunkXLeft === roundedChunkXRight)
+          {
+            console.log("Un solo chunk colisiona");
+            this.fuertes[i].chuncks[Math.floor(bullet.y / this.fuertes[i].chunckHeight)][roundedChunkXLeft] = 0;
+            isColliding = true;
+            break;
+          }
+          else
+          {
+            console.log("El chunk esta en el borde de un chunk");
+            this.fuertes[i].chuncks[Math.floor(bullet.y / this.fuertes[i].chunckHeight)][roundedChunkXLeft] = 0;
+            this.fuertes[i].chuncks[Math.floor(bullet.y / this.fuertes[i].chunckHeight)][roundedChunkXRight] = 0;
+            isColliding = true;
+            break
+          }
+        }
+      }
+    }
+
+    return isColliding;
   }
 
 
@@ -382,15 +455,34 @@ export class SpaceInvadersComponent {
         height: 80,
         x: x,
         y: y,
+        chuncks: [
+          [1, 1, 1],
+          [1, 1, 1],
+          [1, 0, 1]
+        ],
+        chunckWidt: 110 / 3,
+        chunckHeight: 80 / 3,
       }
       this.fuertes.push(fuerte);
     }
     console.log("Fuertes creados: ", this.fuertes);
   }
   DrawFuertes(){
+    // this.fuertes.forEach(fuerte => {
+    //   this.ctx!.fillStyle = 'white';
+    //   this.ctx!.fillRect(fuerte.x, fuerte.y, fuerte.width, fuerte.height);
+    // });
     this.fuertes.forEach(fuerte => {
-      this.ctx!.fillStyle = 'white';
-      this.ctx!.fillRect(fuerte.x, fuerte.y, fuerte.width, fuerte.height);
+      fuerte.chuncks.forEach((row, rowIndex) => {
+        row.forEach((value, colIndex) => {
+          if (value === 1) {
+            const x = fuerte.x + colIndex * fuerte.chunckWidt;
+            const y = fuerte.y + rowIndex * fuerte.chunckHeight;
+            this.ctx!.fillStyle = 'white';
+            this.ctx!.fillRect(x, y, fuerte.chunckWidt, fuerte.chunckHeight);
+          }
+        });
+      });
     });
   }
 
@@ -467,7 +559,6 @@ interface Enemy{
   bulletSpeed: number;
   speedList: number[];
   canShoot: boolean;
-  shootDelay: number;
   sprites: any;
   colisionX: number;
   colisionY: number;
@@ -482,4 +573,7 @@ x: number;
 y: number;
 width: number;
 height: number;
+chuncks: number[][];
+chunckWidt: number;
+chunckHeight: number;
 }
