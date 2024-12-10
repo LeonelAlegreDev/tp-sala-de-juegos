@@ -5,7 +5,7 @@ import { MenuComponent } from '../../menu/menu.component';
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [MenuComponent, NgFor, NgStyle],
+  imports: [NgFor, NgStyle],
   templateUrl: './mayor-menor.component.html',
   styleUrl: './mayor-menor.component.css'
 })

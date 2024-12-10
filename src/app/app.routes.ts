@@ -12,6 +12,11 @@ export const routes: Routes = [
     { path: 'login', component: LoginViewComponent},
     { path: 'signup', component: SignupViewComponent},
     { path: 'about-me', component: AboutMeComponent},
+    // TODO: Mayor o menor
+    // Inicializar el juego sacando la primer carta 
+    // Crear tutorial explicando el sistema de puntos
+    // Crear pantalla de fin de juego al perder o al acabar las cartas
     { path: 'juegos/:id', component: JuegoComponent, },
+
     { path: 'profile', component: ProfileComponent },
 ];

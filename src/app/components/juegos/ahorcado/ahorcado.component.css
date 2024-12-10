@@ -59,8 +59,8 @@
 .screen-playing{
     justify-content: space-between;
     background-image: url('../../../../assets/images/ahorcado/playing-background.jpg');
-    background-size: 150% 105%;
-    background-position: 35% bottom;
+    background-size: 229% 105%;
+    background-position: 50% bottom;
 
     
     #palabra{

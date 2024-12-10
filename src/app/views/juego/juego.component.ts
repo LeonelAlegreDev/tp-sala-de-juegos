@@ -11,7 +11,7 @@ import { SpaceInvadersComponent } from '../../components/juegos/space-invaders/s
 @Component({
   selector: 'app-juego',
   standalone: true,
-  imports: [MenuComponent, NgFor, NgStyle, AhorcadoComponent],
+  imports: [MenuComponent],
   templateUrl: './juego.component.html',
   styleUrl: './juego.component.css'
 })
