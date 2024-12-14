@@ -161,6 +161,10 @@ export class PreguntadosComponent {
 
         this.pregunta.opciones.push(opcionAleatoria);
       }
+
+      // Mezcla las opciones
+      this.pregunta.opciones.sort(() => Math.random() - 0.5);
+
       console.log(this.pregunta)
     });
   }

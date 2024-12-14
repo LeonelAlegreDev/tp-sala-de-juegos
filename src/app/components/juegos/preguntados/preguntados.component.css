@@ -29,7 +29,8 @@
         box-shadow: 0 0 10px 2px rgb(0, 0, 0);
         background-color: var(--light-color);
         font-family: "Handjet-Bold";
-    
+        text-align: center;
+        
         h2{
             font-size: 5em;
         }

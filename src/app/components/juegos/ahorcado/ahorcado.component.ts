@@ -29,10 +29,9 @@ export class AhorcadoComponent {
     partesPersonaje: {} as any,
     letrasUsadas: [] as string[]
   };
-  palabras = ['HOLA', 'MUNDO', 'ANGULAR', 'JUEGO', 'AHORCADO'];
-  palabrasFacil = ['GATO', 'CASA', 'PAIS', 'CIELO', 'AGUA', 'PERRO', 'MESA', 'LUNA', 'BARCO'];
-  palabrasMedio = ['JUEGO', 'LIBRO', 'PLANTA', 'ESCUELA', 'PELOTA', 'MUSICA', 'FUTBOL', 'CAMION', 'LLUVIA', 'TORMENTA'];
-  palabrasDificil = ['ELEFANTE', 'MURCIELAGO', 'MARAVILLOSO', 'HORIZONTE', 'COMPUTADORA', 'EXTRAORDINARIO', 'HELICOPTERO', 'GALAXIA'];
+  palabrasFacil = ['GATO', 'CASA', 'PAIS', 'CIELO', 'AGUA', 'PERRO', 'MESA', 'LUNA', 'BARCO', 'CAMION'];
+  palabrasMedio = ['CARACOL', 'LIBRO', 'PLANTA', 'ESCUELA', 'PELOTA', 'MUSICA', 'FUTBOL', 'LLUVIA', 'TORMENTA', 'GALAXIA'];
+  palabrasDificil = ['UNIVERSO', 'MURCIELAGO', 'HORIZONTE', 'COMPUTADORA', 'EXTRAORDINARIO', 'HELICOPTERO', 'ELECTRONICA', 'CIENTIFICO'];
 
   Start(){
     console.log("Juego iniciado");

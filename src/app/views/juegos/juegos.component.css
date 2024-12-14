@@ -9,11 +9,17 @@ a{
 }
 #wrapper{
     width: 100%;
-    height: 100%;
+    height: calc(100vh - var(--menu-height));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+img{
+    user-select: none;
+    -webkit-user-drag: none; /* Desactivar arrastre de imágenes */
 }
 
 /* carousel */
@@ -23,6 +29,8 @@ a{
     overflow: hidden;
     position: relative;
     border-radius: 10px;
+    -webkit-user-drag: none; /* Desactivar arrastre de imágenes */
+
 }
 
 .list{
@@ -55,6 +63,7 @@ a{
 
         .title, .topic{
             font-weight: bold;
+            font-family: 'Handjet-Bold';
             line-height: 1.3em;
         }
         .title {
@@ -77,14 +86,19 @@ a{
 
             button{
                 border: none;
-                letter-spacing: 3px;
-                font-family: Poppins;
-                font-weight: 500;
-                font-weight: bold;
-                color: var(--background-color);
+                /* letter-spacing: 3px; */
+                font-family: 'Handjet-Bold';
+                font-size: 1.4em;
+                color: black;
                 cursor: pointer;
-                border-radius: 5px;
+                border-radius: 25px;
+                box-shadow: 0 0 10px 1px black;
+                transition: 0.5s;
                 background-color: var(--primary-color);
+            }
+            button:hover{
+                color: var(--primary-color);
+                background-color: black;
             }
         }
         .des{
@@ -93,6 +107,7 @@ a{
             line-height: 1.6em;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.6);
+            font-family: 'Handjet-Regular';
 
             p{
                 font-size: 20px;
@@ -147,10 +162,12 @@ a{
     z-index: 100;
     display: flex;
     gap: 20px;
+    -webkit-user-drag: none; /* Desactivar arrastre de imágenes */
+
 
     .item{
-        width: 150px;
-        height: 220px;
+        width: 140px;
+        height: 180px;
         flex-shrink: 0;
         position: relative;
         border-radius: 20px;
@@ -173,10 +190,12 @@ a{
             right: 10px;
         
             .title{
-                font-weight: 500;
+                font-family: 'Handjet-Bold';
+                text-shadow: 1px -1px 1px black;
+                
             }
             .description{
-                font-weight: 300;
+                font-family: 'Handjet-Regular';
             }
         }
     }
@@ -316,8 +335,8 @@ a{
 }
 @keyframes outFrame{
     to{
-        width: 150px;
-        height: 220px;
+        width: 140px;
+        height: 180px;
         bottom: 20px;
         left: 50%;
         border-radius: 20px;

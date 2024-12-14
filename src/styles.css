@@ -4,6 +4,7 @@
     --secondary-color: #2e3575;
     --accent-color: #936cc4;
     --light-color: #ebf7f0;
+    --menu-height: 60px;
 }
 *{
     padding: 0;

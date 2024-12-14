@@ -10,11 +10,10 @@
 }
 #navLeft{
     width: 40%;
-    height: 60px;
+    height: var(--menu-height);
 	color: var(--primary-color);
 	font-size: 45px;
     font-family: oleoscript,'Brush Script MT';
-    /* // TODO: cambiar fuentes */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,6 +46,7 @@
 	list-style: none;
 	flex: 1;
 	height: 60px;
+	font-family: 'Handjet-Bold';
 	border-left: 1px solid var(--light-color);
 	transition: 0.5s;
 }
