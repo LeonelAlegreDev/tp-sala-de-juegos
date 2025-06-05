@@ -87,6 +87,7 @@ export class JuegoComponent {
   CargarJuego(): void {
     this.route.paramMap.subscribe(params => {
       let idJuego = params.get('id')?.replace('-','');
+      console.log("ID del juego:", idJuego);
       let component = null;
 
       this.juegosList.forEach(juego => {

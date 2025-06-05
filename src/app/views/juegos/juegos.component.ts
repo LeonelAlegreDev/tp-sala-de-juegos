@@ -1,18 +1,17 @@
 import { Component, ViewChildren, QueryList, ElementRef, Renderer2, ViewChild, inject } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-juegos',
   standalone: true,
-  imports: [MenuComponent, RouterLink, RouterLinkActive],
+  imports: [MenuComponent, RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './juegos.component.html',
   styleUrl: './juegos.component.css'
 })
 export class JuegosComponent {
-  // TODO: Integrar codigo Javascript
   @ViewChildren('listItem') listItem!: QueryList<ElementRef>;
   @ViewChildren('listThumb') listThumb!: QueryList<ElementRef>;
   @ViewChildren('list') listContainer!: QueryList<ElementRef>;
@@ -31,16 +30,6 @@ export class JuegosComponent {
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit() {
-    this.listItem.forEach( item => {
-      // Muestra los elementos en consola
-      // console.log(item.nativeElement);
-    });
-
-    this.listThumb.forEach( thumb => {
-      // Muestra los elementos en consola
-      // console.log(thumb.nativeElement);
-    });
-
     this.GoNextAuto();
   }
   ngOnDestroy() {

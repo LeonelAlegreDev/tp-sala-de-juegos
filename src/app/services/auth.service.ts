@@ -5,14 +5,20 @@ import { createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedIn: boolean = true;
+  private isLoggedIn: boolean = false;
   msjError: string = '';
-  user: any;
+  private user: any = null;
 
   constructor(private auth: Auth) { }
 
-  public IsLoggedIn() {
-    return this.isLoggedIn;
+  public IsLoggedIn(): boolean {
+    if (this.user !== null) {
+      return true;
+    }
+    return false;
+  }
+  public GetUser(): any {
+    return this.user;
   }
 
   async Login(email: string, password: string) {

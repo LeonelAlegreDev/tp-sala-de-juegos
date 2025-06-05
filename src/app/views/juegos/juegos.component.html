@@ -1,171 +1,149 @@
-@if(this.authService.IsLoggedIn()) {
-    <app-menu></app-menu>
-    <div id="wrapper">
-        <div #carousel class="carousel start">
-            <!-- TODO: Crear los componentes de cada juego y una interfaz comun -->
-    
-            <!-- IITEM LIST -->
-            <div #list class="list">
-    
-                <!-- EL AHORCADO -->
-                <div #listItem class="item">
-                    <img src="../../../assets/images/ahorcado-background.png">
-                    <div class="content">
-                        <h1 class="title">El Ahorcado</h1>
-                        <div class="topic">Adivinanza</div>
-                        <div class="des">
-                            <h2>¡Adivina la palabra antes de que sea demasiado tarde!</h2>
-                            <p>
-                                En el clásico juego del Ahorcado, tendrás que poner a prueba tu vocabulario 
-                                y tu habilidad para deducir palabras. ¡Cada letra equivocada te acerca un 
-                                poco más al... ¡ahorcado! ¿Podrás salvar al personaje y ganar la partida?
-                            </p>    
-                        </div>
-                        <div class="buttons">
-                            <button routerLink="./ahorcado" routerLinkActive="active-route">Jugar Ahora</button>
-                        </div>
+<app-menu></app-menu>
+<router-outlet></router-outlet>
+<div id="wrapper">
+    <!-- CAROUSEL -->
+    <div #carousel class="carousel start">
+        <!-- IITEM LIST -->
+        <div #list class="list">
+            <!-- EL AHORCADO -->
+            <div #listItem class="item">
+                <img src="../../../assets/images/ahorcado-background.png">
+                <div class="content">
+                    <h1 class="title">El Ahorcado</h1>
+                    <div class="topic">Adivinanza</div>
+                    <div class="des">
+                        <h2>¡Adivina la palabra antes de que sea demasiado tarde!</h2>
+                        <p>
+                            En el clásico juego del Ahorcado, tendrás que poner a prueba tu vocabulario 
+                            y tu habilidad para deducir palabras. ¡Cada letra equivocada te acerca un 
+                            poco más al... ¡ahorcado! ¿Podrás salvar al personaje y ganar la partida?
+                        </p>    
                     </div>
-                </div>
-    
-                <!-- MAYOR O MENOR -->
-                <div #listItem class="item" id="mayor-menor">
-                    <img src="../../../assets/images/card-game-background.png">
-                    <div class="content">
-                        <h1 class="title">¿Mayor o Menor?</h1>
-                        <div class="topic">Juego de cartas</div>
-                        <div class="des">
-                            <h2>¡Pon a prueba tu suerte y estrategia en este clásico juego de cartas!</h2>
-                            <p>
-                                Cada ronda, tendrás que decidir si la próxima
-                                carta será más alta o más baja que la anterior. 
-                                ¿Podrás acumular la mayor cantidad de puntos y convertirte en el campeón?
-                            </p>   
-                        </div>
-                        <div class="buttons">
-                            <button routerLink="./mayor-menor" routerLinkActive="active-route">Jugar Ahora</button>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- PREGUNTADOS-->
-                <div #listItem class="item">
-                    <img src="../../../assets/images/preguntados-background.jpg">
-                    <div class="content">
-                        <div class="title">PREGUNTADOS</div>
-                        <div class="topic">Trivia</div>
-                        <div class="des">
-                            <h2>¡Conviértete en un maestro de la trivia!</h2>
-                            <p>
-                                Pon a prueba tus conocimientos en una amplia variedad 
-                                de temas y descubre cuánto sabes. Con cada pregunta acertada, 
-                                ¡estarás más cerca de convertirte en un verdadero experto!
-                            </p>
-                        </div>
-                        <div class="buttons">
-                            <button routerLink="./preguntados" routerLinkActive="active-route">Jugar Ahora</button>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- SPACE INVADERS -->
-                <div #listItem class="item">
-                    <img src="../../../assets/images/space-invaders-background.jpg">
-                    <div class="content">
-                        <div class="title">Space Invaders</div>
-                        <div class="topic">Arcade</div>
-                        <div class="des">
-                            <h2>¡Defiende la Tierra de la invasión alienígena!</h2>
-                            <p>
-                                Prepárate para una intensa acción arcade. Esquiva 
-                                las balas enemigas y destruye a los invasores 
-                                alienígenas antes de que sea demasiado tarde. 
-                                ¡La supervivencia de la humanidad está en tus manos!
-                            </p>
-                        </div>
-                        <div class="buttons">
-                            <button routerLink="./space-invaders" routerLinkActive="active-route">Jugar Ahora</button>
-                        </div>
+                    <div class="buttons">
+                        <button routerLink="./ahorcado" routerLinkActive="active-route">Jugar Ahora</button>
                     </div>
                 </div>
             </div>
-    
-            <!-- THUMBNAILS -->
-            <div #thumbnail class="thumbnail">
-    
-                <!-- EL AHORCADO -->
-                <div #listThumb class="item" routerLink="./ahorcado" routerLinkActive="active-route">
-                    <img src="../../../assets/images/ahorcado-thumbnail.png">
-                    <div class="content">
-                        <h2 class="title">
-                            El Ahorcado 
-                            <!-- TODO: Modificar estilos del thumbnail -->
-                        </h2>
-                        <h3 class="description">
-                            Adivinanza
-                        </h3>
+
+            <!-- MAYOR O MENOR -->
+            <div #listItem class="item" id="mayor-menor">
+                <img src="../../../assets/images/card-game-background.png">
+                <div class="content">
+                    <h1 class="title">¿Mayor o Menor?</h1>
+                    <div class="topic">Juego de cartas</div>
+                    <div class="des">
+                        <h2>¡Pon a prueba tu suerte y estrategia en este clásico juego de cartas!</h2>
+                        <p>
+                            Cada ronda, tendrás que decidir si la próxima
+                            carta será más alta o más baja que la anterior. 
+                            ¿Podrás acumular la mayor cantidad de puntos y convertirte en el campeón?
+                        </p>   
                     </div>
-                </div>
-    
-                <!-- MAYOR O MENOR -->
-                <div #listThumb class="item" routerLink="./mayor-menor" routerLinkActive="active-route">
-                    <img src="../../../assets/images/card-game-thumbnail.png">
-                    <div class="content">
-                        <h2 class="title">
-                            ¿Mayor o Menor?
-                        </h2>
-                        <h3 class="description">
-                            Juego de cartas
-                        </h3>
-                    </div>
-                </div>
-    
-                <!-- PREGUNTADOS -->
-                <div #listThumb class="item" routerLink="./preguntados" routerLinkActive="active-route">
-                    <img src="../../../assets/images/preguntados-thumbnail.jpg">
-                    <div class="content">
-                        <h2 class="title">
-                            Preguntados
-                        </h2>
-                        <h3 class="description">
-                            Juego de cartas
-                        </h3>
-                    </div>
-                </div>
-    
-                <!-- SPACE INVADERS -->
-                <div #listThumb class="item" routerLink="./space-invaders" routerLinkActive="active-route">
-                    <img src="../../../assets/images/space-invaders-thumbnail.jpg">
-                    <div class="content">
-                        <h2 class="title">Space Invaders</h2>
-                        <h3 class="description">Arcade</h3>
+                    <div class="buttons">
+                        <button routerLink="./mayor-menor" routerLinkActive="active-route">Jugar Ahora</button>
                     </div>
                 </div>
             </div>
-    
-            <!-- CONTROLS -->
-            <div class="arrows">
-                <button id="prev" (click)="GoBack()"><</button>
-                <button id="next" (click)="GoNext()">></button>
+
+            <!-- PREGUNTADOS-->
+            <div #listItem class="item">
+                <img src="../../../assets/images/preguntados-background.jpg">
+                <div class="content">
+                    <div class="title">PREGUNTADOS</div>
+                    <div class="topic">Trivia</div>
+                    <div class="des">
+                        <h2>¡Conviértete en un maestro de la trivia!</h2>
+                        <p>
+                            Pon a prueba tus conocimientos en una amplia variedad 
+                            de temas y descubre cuánto sabes. Con cada pregunta acertada, 
+                            ¡estarás más cerca de convertirte en un verdadero experto!
+                        </p>
+                    </div>
+                    <div class="buttons">
+                        <button routerLink="./preguntados" routerLinkActive="active-route">Jugar Ahora</button>
+                    </div>
+                </div>
             </div>
-    
-    
-            <!-- TIME BAR -->
-            <div class="time"></div>
+
+            <!-- SPACE INVADERS -->
+            <div #listItem class="item">
+                <img src="../../../assets/images/space-invaders-background.jpg">
+                <div class="content">
+                    <div class="title">Space Invaders</div>
+                    <div class="topic">Arcade</div>
+                    <div class="des">
+                        <h2>¡Defiende la Tierra de la invasión alienígena!</h2>
+                        <p>
+                            Prepárate para una intensa acción arcade. Esquiva 
+                            las balas enemigas y destruye a los invasores 
+                            alienígenas antes de que sea demasiado tarde. 
+                            ¡La supervivencia de la humanidad está en tus manos!
+                        </p>
+                    </div>
+                    <div class="buttons">
+                        <button routerLink="./space-invaders" routerLinkActive="active-route">Jugar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THUMBNAILS -->
+        <div #thumbnail class="thumbnail">
+
+            <!-- EL AHORCADO -->
+            <div #listThumb class="item" routerLink="./ahorcado" routerLinkActive="active-route">
+                <img src="../../../assets/images/ahorcado-thumbnail.png">
+                <div class="content">
+                    <h2 class="title">
+                        El Ahorcado 
+                        <!-- TODO: Modificar estilos del thumbnail -->
+                    </h2>
+                    <h3 class="description">
+                        Adivinanza
+                    </h3>
+                </div>
+            </div>
+
+            <!-- MAYOR O MENOR -->
+            <div #listThumb class="item" routerLink="./mayor-menor" routerLinkActive="active-route">
+                <img src="../../../assets/images/card-game-thumbnail.png">
+                <div class="content">
+                    <h2 class="title">
+                        ¿Mayor o Menor?
+                    </h2>
+                    <h3 class="description">
+                        Juego de cartas
+                    </h3>
+                </div>
+            </div>
+
+            <!-- PREGUNTADOS -->
+            <div #listThumb class="item" routerLink="./preguntados" routerLinkActive="active-route">
+                <img src="../../../assets/images/preguntados-thumbnail.jpg">
+                <div class="content">
+                    <h2 class="title">
+                        Preguntados
+                    </h2>
+                    <h3 class="description">
+                        Juego de cartas
+                    </h3>
+                </div>
+            </div>
+
+            <!-- SPACE INVADERS -->
+            <div #listThumb class="item" routerLink="./space-invaders" routerLinkActive="active-route">
+                <img src="../../../assets/images/space-invaders-thumbnail.jpg">
+                <div class="content">
+                    <h2 class="title">Space Invaders</h2>
+                    <h3 class="description">Arcade</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="arrows">
+            <button id="prev" (click)="GoBack()"><</button>
+            <button id="next" (click)="GoNext()">></button>
         </div>
     </div>
-}
-@else {
-    <div id="unlogged_wrapper">
-        <div id="img_container">
-            <img src="assets/images/gamer-zone.png">
-        </div>
-        <div id="start_container">
-            <div id="text">
-                <h1>Sala de Juegos</h1>
-                <p>Diversión asegurada.</p>
-            </div>
-            <input id="login" type="button" routerLink="/login" routerLinkActive="active-route">
-            <label for="login">Comenzá ahora</label>
-        </div>
-    </div>
-}
+</div>

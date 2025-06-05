@@ -6,7 +6,7 @@ import { MenuComponent } from '../../components/menu/menu.component';
 @Component({
   selector: 'app-home-view',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, MenuComponent],
+  imports: [RouterLink, MenuComponent],
   templateUrl: './home-view.component.html',
   styleUrl: './home-view.component.css'
 })
