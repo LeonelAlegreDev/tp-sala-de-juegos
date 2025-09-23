@@ -1,82 +1,58 @@
-import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { inject, Injectable } from '@angular/core';
+import {
+  Auth,
+  browserSessionPersistence,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  user,
+  User,
+} from '@angular/fire/auth';
+import { setPersistence } from 'firebase/auth';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedIn: boolean = false;
-  private user: any = null;
-  msjError: string = '';
+  user$: Observable<User | null>;
+  firebaseAuth: Auth = inject(Auth);
 
-  constructor(private auth: Auth) { }
-
-  public IsLoggedIn(): boolean {
-    if (this.user !== null) {
-      return true;
-    }
-    return false;
-  }
-  public GetUser(): any {
-    return this.user;
+  constructor() {
+    this.setSessionStoragePersistence();
+    this.user$ = user(this.firebaseAuth);
   }
 
-  async Login(email: string, password: string) {
-    try{
-      // Inicia sesion con email y password en fireauth
-      const res = await signInWithEmailAndPassword(this.auth, email, password);
-      if (res.user.email !== null && res.user.uid !== null && res.user.email === email) {
-        this.user = {
-          email: res.user.email,
-          uid: res.user.uid
-        }
-        this.isLoggedIn = true;
-      }
-      else throw new Error("Error al iniciar sesion"); 
-    } catch(e: any){      
-      if(e.code === "auth/invalid-credential"){
-        throw new Error("Credenciales invalidas");
-      }
-      else throw new Error("Error al iniciar sesion");
-    } 
+  private setSessionStoragePersistence(): void {
+    setPersistence(this.firebaseAuth, browserSessionPersistence);
   }
 
-  async Signup(email: string, password: string) {
-    try {
-      const res = await createUserWithEmailAndPassword(this.auth, email, password);
-      if (res.user.email !== null && res.user.uid !== null) {
-        this.user = {
-          email: res.user.email,
-          uid: res.user.uid
-        }
-        console.log(this.user);
-        this.isLoggedIn = true;
-      }
-      else{
-        throw new Error("Error al crear usuario");
-      }
-    } catch (e: any) {
-      switch (e.code) {
-        case "auth/invalid-email":
-          this.msjError = "Email invalido";
-          break;
-        case "auth/email-already-in-use":
-          this.msjError = "Email ya en uso";
-          break;
-        case "auth/invalid-credential":
-          this.msjError = "Credenciales invalidas";
-          break;
-        default:
-          this.msjError = e.code
-          break;
-      }
-      throw new Error(this.msjError);
-    }
+  Login(email: string, password: string): Observable<void> {
+    const promise = signInWithEmailAndPassword(
+      this.firebaseAuth,
+      email,
+      password
+    ).then(() => {
+      //
+    });
+    return from(promise);
   }
 
-  Logout() {
-    // Logica de cierre de sesion
-    console.log('Sesion cerrada');
-    this.isLoggedIn = false;
+  Logout(): Observable<void> {
+    const promise = signOut(this.firebaseAuth).then(() => {
+      sessionStorage.clear();
+    });
+    return from(promise);
+  }
+
+  async Signup(email: string, password: string): Promise<void> {
+    await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+    .then(() => {
+      console.log("Usuario registrado con éxito");
+    })
+    .catch((e) =>{
+      console.error(e);
+    });
   }
 }
