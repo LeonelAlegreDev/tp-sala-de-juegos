@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   browserSessionPersistence,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -28,28 +27,33 @@ export class AuthService {
     setPersistence(this.firebaseAuth, browserSessionPersistence);
   }
 
-  Login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(
+  async Login(email: string, password: string): Promise<void> {
+    await signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
       password
     ).then(() => {
-      //
+      console.log('Usuario conectado a Firebase Auth');
+      return;
     });
-    return from(promise);
   }
 
-  Logout(): Observable<void> {
-    const promise = signOut(this.firebaseAuth).then(() => {
+  async Logout(): Promise<void> {
+    await signOut(this.firebaseAuth).then(() => {
       sessionStorage.clear();
-    });
-    return from(promise);
+      console.log('Usuario desconectado de Firebase Auth');
+      return;
+    })
+    // .catch((e) => {
+    //   console.error(e);
+    // });
   }
 
   async Signup(email: string, password: string): Promise<void> {
     await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
-    .then(() => {
-      console.log("Usuario registrado con éxito");
+    .then((userCredentials) => {
+      console.log("Usuario registrado en Firebase Auth");
+        return userCredentials.user.uid;
     })
     .catch((e) =>{
       console.error(e);

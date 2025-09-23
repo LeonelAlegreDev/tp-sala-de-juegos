@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet, Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormsModule, ReactiveFormsModule, 
          Validators, FormControl } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { IUser } from '../../interfaces/i-user';
 
 @Component({
   selector: 'app-signup-view',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './signup-view.component.html',
   styleUrl: './signup-view.component.css'
 })
 export class SignupViewComponent {
+  private authService = inject(AuthService);
+  private userService = inject(UserService);
+  
   form!: FormGroup;
   email_error = '';
   password_error = '';
   form_error = '';
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(private router: Router) {
     this.initForm();
   }
 
@@ -59,7 +64,14 @@ export class SignupViewComponent {
       this.password_error = '';
 
       try{
-        await this.auth.Signup(this.form.value.email, this.form.value.password);
+        const uid = await this.authService.Signup(this.form.value.email, this.form.value.password);
+        const user: IUser = {
+          id: uid!,
+          email: this.form.value.email,
+          role: 'client'
+        }
+        // await this.userService.CreateUser(user);
+        
         this.form_error = '';
         console.log("Usuario creado con exito");
         this.router.navigate(['/home']);

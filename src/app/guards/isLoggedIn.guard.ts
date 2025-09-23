@@ -15,7 +15,7 @@ export const isLoggedIn: CanActivateFn = (route, state) => {
         return true;
       } else {
         console.log('Usuario no autenticado . Acceso denegado');
-        router.navigate(['']);
+        router.navigate(['/welcome']);
         return false;
       }
     })

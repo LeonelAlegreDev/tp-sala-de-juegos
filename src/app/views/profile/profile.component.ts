@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,5 +11,18 @@ import { MenuComponent } from '../../components/menu/menu.component';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  // TODO: Implementar logout
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  userEmail = "ejemplo@email.com";
+
+  async Logout() {
+    await this.authService.Logout()
+    .then(() => {
+      console.log('Usuario desconectado');
+      this.router.navigate(['/welcome']);
+    })
+    .catch((e) => {
+      console.error("Error al desconectar el usuario", e);
+    });
+  }
 }
