@@ -19,14 +19,15 @@
     height: auto;
     color: var(--light-color);    
 
-    h1{
+    .title{
         margin: 0px;
-        font-size: 2.5em;
+        font-size: 50px;
         letter-spacing: 5px;
         font-family: 'Handjet-Regular';
     }
-    h2{
-        font-size: 22px;
+    .subtitle{
+        font-family: 'Handjet-Regular';
+        font-size: 30px;
     }
 
     img{
@@ -75,7 +76,15 @@ form{
     button {
         background-color: var(--primary-color);
         border: none;
-        font-weight: bold;
+        font-weight: 700;
+        font-size: 25px;
+        letter-spacing: 3px;
+        font-family: 'Handjet-Regular';
+        cursor: pointer;
+        transition: linear 0.25s;
+    }
+    button:hover {
+        background-color: rgba(255, 255, 255, 0.5)
     }
     span{
         color: rgb(255, 165, 165);
@@ -114,7 +123,8 @@ form{
         background-color: rgba(0, 0, 0, 0);
         border: none;
         color: var(--primary-color);
-        font-weight: bold;
+        font-size: 16px;
+        font-weight: 700;
         cursor: pointer;
     }
 }

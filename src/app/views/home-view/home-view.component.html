@@ -1,46 +1,13 @@
-@if (IsLoggedIn()) {
-    <app-menu></app-menu>
-
-    <div id="logged_wrapper">
-        <h1>Accediste a tu cuenta con exito!</h1>
-
-        <input id="about-me" type="button" routerLink="/about-me" routerLinkActive="active-route">
-        <label for="about-me">Sobre mí</label>
+<div id="unlogged_wrapper">
+    <div id="img_container">
+        <img src="assets/images/gamer-zone.png">
     </div>
-}
-@else {
-    <div id="unlogged_wrapper">
-        <div id="img_container">
-            <img src="assets/images/gamer-zone.png">
+    <div id="start_container">
+        <div id="text">
+            <h1>Sala de Juegos</h1>
+            <p>Diversión asegurada.</p>
         </div>
-        <div id="start_container">
-            <div id="text">
-                <h1>Sala de Juegos</h1>
-                <p>Diversión asegurada.</p>
-            </div>
-            <input id="login" type="button" routerLink="/login" routerLinkActive="active-route">
-            <label for="login">Comenzá ahora</label>
-        </div>
+        <input id="login" type="button" routerLink="/login" routerLinkActive="active-route">
+        <label for="login">Comenzá ahora</label>
     </div>
-}
-
-
-<!-- El usuario se encuentra registrado -->
-@if (IsLoggedIn()) {
-    <!-- <h2>Lograste acceder a {{ appName }}</h2>
-    <section>
-        <h3>Seccion en construcción</h3>
-        <button (click)="Logout()">Cerrar sessión</button>
-    </section> -->
-}
-<!-- El usuario no se encuentra registrado -->
-<!-- @else {
-    <section>
-        <h2>Crea una cuenta</h2>
-        <button routerLink="/signup" routerLinkActive="active-route">Crear cuenta</button>
-    </section>
-    <section>
-        <h2>Inicia sesión con tu cuenta</h2>
-        <button routerLink="/login" routerLinkActive="active-route">Iniciar sesión</button>
-    </section>
-} -->
+</div>

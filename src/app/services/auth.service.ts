@@ -6,8 +6,8 @@ import { createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from
 })
 export class AuthService {
   private isLoggedIn: boolean = false;
-  msjError: string = '';
   private user: any = null;
+  msjError: string = '';
 
   constructor(private auth: Auth) { }
 
@@ -74,10 +74,9 @@ export class AuthService {
     }
   }
 
-  Logout(): boolean {
+  Logout() {
     // Logica de cierre de sesion
-    console.log('Usuario serro sesion');
+    console.log('Sesion cerrada');
     this.isLoggedIn = false;
-    return true;
   }
 }
