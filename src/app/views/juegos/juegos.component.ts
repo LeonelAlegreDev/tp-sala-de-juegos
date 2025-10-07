@@ -1,13 +1,13 @@
 import { Component, ViewChildren, QueryList, ElementRef, Renderer2, ViewChild, inject } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
+import { LoadingScreenComponent } from '../../components/loading-screen/loading-screen.component';
 
 @Component({
   selector: 'app-juegos',
   standalone: true,
-  imports: [MenuComponent, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [MenuComponent, RouterLink, RouterLinkActive, RouterOutlet, LoadingScreenComponent],
   templateUrl: './juegos.component.html',
   styleUrl: './juegos.component.css'
 })
@@ -18,7 +18,7 @@ export class JuegosComponent {
   @ViewChildren('thumbnail') thumbnailContainer!: QueryList<ElementRef>;
   @ViewChild('carousel') carousel!: ElementRef;
   authService = inject(AuthService);
-
+  isLoading = true;
 
   animationDelay = 3000; // Duración de la animación en ms
   autoTime = 10000; // Cambio automático en ms
@@ -30,6 +30,10 @@ export class JuegosComponent {
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+      console.log('Carga completada en el siguiente ciclo.');
+    }, 0);
     this.GoNextAuto();
   }
   ngOnDestroy() {

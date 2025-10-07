@@ -1,5 +1,11 @@
-<app-menu></app-menu>
+@if (isLoading) {
+    <app-loading-screen></app-loading-screen>
+}
+@else {
+    <app-menu></app-menu>
+}
 <router-outlet></router-outlet>
+
 <div id="wrapper">
     <!-- CAROUSEL -->
     <div #carousel class="carousel start">
