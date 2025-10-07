@@ -21,6 +21,7 @@ header{
     align-items: center;
     color: black;
     border-radius: 10px;
+    text-align: center;
 
     background-color: var(--primary-color);
 
