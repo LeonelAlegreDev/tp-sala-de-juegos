@@ -9,6 +9,8 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { MenuComponent } from '../../menu/menu.component';
+import { CommonModule } from '@angular/common';
 
 interface SnakeSegment {
   x: number;
@@ -28,6 +30,7 @@ type Direction = 'up' | 'down' | 'left' | 'right';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MenuComponent, CommonModule]
 })
 export class SnakeComponent implements AfterViewInit { // Nombre de la clase actualizado
   @ViewChild('snakeCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
@@ -47,9 +50,12 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
   directionQueue = signal<Direction>('right');
   isGameOver = signal(true);
   isPlaying = computed(() => !this.isGameOver());
+  gameStates = ['start', 'playing', 'gameover'];
+  gameState = this.gameStates[0];
 
   private gameLoopRef: any;
   private possibleCoordinates: number[] = [];
+  private playing: boolean = false;
 
   constructor() {
     // Calculate all possible X/Y coordinates based on cellSize
@@ -146,7 +152,15 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
     this.drawSquare(currentFood.x, currentFood.y, '#ff3636');
   }
 
-  // --- Game Logic ---
+  start(){
+    this.gameState = this.gameStates[1];  // playing
+  }
+
+  startGame(): void {
+    this.gameState = 'playing';
+    this.newGame();
+  }
+
 
   newGame(): void {
     if (this.gameLoopRef) {
@@ -159,6 +173,8 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
     this.directionQueue.set('right');
     this.createSnake();
     this.createFood();
+
+    this.gameState = 'playing';
 
     this.gameLoopRef = setInterval(() => this.game(), this.gameSpeed);
   }
@@ -226,14 +242,14 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
 
   gameOver(): void {
     if (this.gameLoopRef) {
-      clearInterval(this.gameLoopRef);
+      clearInterval(this.gameLoopRef); // Detener el bucle inmediatamente
     }
-    this.isGameOver.set(true);
+    this.gameState = 'gameover'; // Cambiar el estado del juego
   }
 
   // --- Main Game Loop ---
   game(): void {
-    if (this.isGameOver()) return;
+    if (this.isGameOver()) this.gameOver();
 
     this.moveSnake();
 
@@ -252,7 +268,8 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
     }
 
     if (wallCollision || selfCollision) {
-      this.gameOver();
+      this.isGameOver.set(true); // Asegurarse de actualizar el estado inmediatamente
+      this.gameOver(); // Detener el bucle y cambiar el estado del juego
       return;
     }
 
@@ -271,5 +288,15 @@ export class SnakeComponent implements AfterViewInit { // Nombre de la clase act
     this.setBackground('#0f172a', '#1e293b'); // Dark background
     this.drawFood();
     this.drawSnake();
+  }
+
+  resetGame(): void {
+    this.gameState = 'start';
+    this.isGameOver.set(true);
+    this.score.set(0);
+    this.snake.set([]);
+    this.food.set({ x: 0, y: 0 });
+    this.direction.set('right');
+    this.directionQueue.set('right');
   }
 }
