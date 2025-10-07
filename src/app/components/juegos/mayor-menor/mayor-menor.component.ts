@@ -1,11 +1,11 @@
 import { Component, ViewChildren, ElementRef, QueryList, Renderer2, ViewChild, HostListener } from '@angular/core';
-import { NgFor, NgStyle } from '@angular/common';
+import { CommonModule, NgFor, NgStyle } from '@angular/common';
 import { MenuComponent } from '../../menu/menu.component';
 
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [NgFor, NgStyle],
+  imports: [NgFor, NgStyle, CommonModule],
   templateUrl: './mayor-menor.component.html',
   styleUrl: './mayor-menor.component.css'
 })
@@ -24,6 +24,9 @@ export class MayorMenorComponent {
     racha: 0,
     pozo: 0
   };
+
+  message: string | null = null;
+  messageTimeout: any = null;
 
   ngOnInit(): void {
     this.GenerarMazo();
@@ -94,8 +97,17 @@ export class MayorMenorComponent {
 
   Start(): void {
     console.log("Juego iniciado");
-
     this.gameState = this.gameStateList[1];
+
+    // Ensure cardElements is populated before accessing it
+    setTimeout(() => {
+      const lastCardIndex = this.mazo.slice().reverse().findIndex(card => !card.descartada);
+      if (lastCardIndex !== -1) {
+        const actualIndex = this.mazo.length - 1 - lastCardIndex;
+        this.MostrarCarta(actualIndex, 0);
+        this.mazo[actualIndex].descartada = true;
+      }
+    }, 2000);
   }
 
 
@@ -391,6 +403,9 @@ export class MayorMenorComponent {
     this.run.racha++;
     this.run.pozo = this.run.apuesta * this.run.racha;
     this.run.banca += this.run.pozo;
+
+    // Show "Ganaste" message
+    this.showMessage(`Ganaste ${this.run.pozo} puntos`);
   }
 
   ReiniciarRacha(){
@@ -398,6 +413,24 @@ export class MayorMenorComponent {
       console.log('Fin del juego');
     }
     this.run.racha = 0;
+
+    // Show "Perdiste" message
+    this.showMessage(`Perdiste ${this.run.apuesta} puntos`);
+  }
+
+  showMessage(msg: string) {
+    // Clear any existing timeout
+    if (this.messageTimeout) {
+      clearTimeout(this.messageTimeout);
+    }
+
+    // Set the new message
+    this.message = msg;
+
+    // Hide the message after 2 seconds
+    this.messageTimeout = setTimeout(() => {
+      this.message = null;
+    }, 2000);
   }
 
   Empatar(){

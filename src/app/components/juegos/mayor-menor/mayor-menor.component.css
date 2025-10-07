@@ -342,3 +342,22 @@
         cursor: pointer;
     }
 }
+
+/* Style for the message */
+.row-message{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 50px;
+}
+.message {
+  font-family: 'Handjet-Bold'; /* Replace 'Arial' with the font used in the template */
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 250px;
+}
