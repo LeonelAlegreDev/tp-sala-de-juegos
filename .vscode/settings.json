@@ -18,5 +18,11 @@
         "titleBar.inactiveBackground": "#42b88399",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#42b883"
+    "peacock.color": "#42b883",
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "none",
+    "editor.smoothScrolling": false,
+    "files.autoSave": "off",
+    "workbench.startupEditor": "none",
+    "workbench.iconTheme": null,
 }

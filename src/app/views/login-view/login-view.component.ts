@@ -2,21 +2,25 @@ import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormsModule, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
-
+import { LoadingScreenComponent } from '../../components/loading-screen/loading-screen.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login-view',
   standalone: true,
-  imports: [RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, LoadingScreenComponent, CommonModule],
   templateUrl: './login-view.component.html',
-  styleUrl: './login-view.component.css'
+  styleUrl: './login-view.component.css',
 })
 export class LoginViewComponent {
-  // TODO: Crear tipo de dato para el usuario
+  // TODO: Implementar IUser
   form!: FormGroup;
   email_error = '';
   password_error = '';
   form_error = '';
+  isLoading = false;
+
+
 
   constructor(public auth: AuthService, private router: Router) {
     this.initForm();
@@ -55,9 +59,10 @@ export class LoginViewComponent {
   async Submit() {
     // Valida los campos del formulario
     if(this.ValidarFormulario()){
+      this.isLoading = true;
       this.email_error = '';
       this.password_error = '';
-
+      
       try{
         await this.auth.Login(this.form.value.email, this.form.value.password);
         console.log("Usuario logeado con exito");
