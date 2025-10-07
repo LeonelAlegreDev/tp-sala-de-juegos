@@ -1,0 +1,188 @@
+
+    /* ------------------- BASE STYLES ------------------- */
+    :host {
+        font-family: 'Inter', sans-serif;
+      }
+  
+      .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #1a202c; /* Fondo oscuro */
+        padding: 16px;
+      }
+  
+      .game-card {
+        background-color: #2d3748; /* Contenedor del juego */
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+      }
+  
+      /* ------------------- SCORE PANEL STYLES ------------------- */
+      .score-panel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+  
+      .score-display {
+        font-size: 1.5rem;
+        font-family: monospace;
+        letter-spacing: 0.05em;
+        color: #68d391; /* Verde */
+      }
+  
+      .score-value {
+        font-weight: bold;
+        color: #ffffff;
+      }
+  
+      .game-button {
+        background-color: #4299e1; /* Azul */
+        color: white;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+  
+      .game-button:hover {
+        background-color: #3182ce;
+        transform: translateY(-1px);
+      }
+  
+      /* ------------------- CANVAS STYLES ------------------- */
+      .canvas-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1; /* Asegura que sea cuadrado */
+        border: 4px solid #4a5568; 
+        border-radius: 8px;
+        overflow: hidden;
+      }
+  
+      .game-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #0f172a; 
+        outline: none;
+      }
+  
+      /* ------------------- GAME OVER OVERLAY ------------------- */
+      .game-over-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+  
+      .game-over-title {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: #f56565; /* Rojo */
+        margin-bottom: 8px;
+        animation: pulse 1.5s infinite;
+      }
+  
+      .game-over-score {
+        font-size: 1.25rem;
+        color: white;
+        margin-bottom: 24px;
+      }
+  
+      .score-final-value {
+        font-weight: bold;
+        color: #f6e05e; /* Amarillo */
+      }
+  
+      .game-over-button {
+        background-color: #48bb78; /* Verde */
+        color: white;
+        font-weight: bold;
+        padding: 12px 32px;
+        border-radius: 9999px; 
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        transform: scale(1);
+        transition: transform 0.3s, background-color 0.3s;
+        border: none;
+        cursor: pointer;
+      }
+  
+      .game-over-button:hover {
+        background-color: #38a169;
+        transform: scale(1.05);
+      }
+  
+      /* ------------------- MOBILE CONTROLS ------------------- */
+      .mobile-controls {
+        margin-top: 24px;
+        display: none; /* Oculto por defecto */
+        flex-direction: column;
+        align-items: center;
+      }
+  
+      .controls-label {
+        color: #a0aec0;
+        margin-bottom: 12px;
+      }
+  
+      .dir-row {
+        display: flex;
+        gap: 8px;
+      }
+  
+      .dir-button {
+        width: 64px;
+        height: 64px;
+        background-color: #4a5568; 
+        color: white;
+        font-size: 1.875rem; 
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border: none;
+        transition: background-color 0.3s;
+        cursor: pointer;
+      }
+  
+      .dir-button:hover {
+        background-color: #2d3748; 
+      }
+  
+      .dir-button.up {
+        margin-bottom: 8px;
+      }
+  
+      /* Muestra los controles móviles solo en pantallas pequeñas */
+      @media (max-width: 639px) {
+        .mobile-controls {
+          display: flex;
+        }
+      }
+  
+      /* ------------------- ANIMATIONS ------------------- */
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+  
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    

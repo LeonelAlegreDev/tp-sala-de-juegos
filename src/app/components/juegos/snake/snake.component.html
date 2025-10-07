@@ -1,0 +1,50 @@
+<div class="game-wrapper">
+    <div class="game-card">
+      <!-- Puntuación y Estado del Juego -->
+      <div class="score-panel">
+        <div class="score-display">
+          Puntuación: <span class="score-value">{{ score() }}</span>
+        </div>
+        <button (click)="newGame()" class="game-button">
+          {{ isPlaying() ? 'Reiniciar' : 'Nuevo Juego' }}
+        </button>
+      </div>
+
+      <!-- Contenedor del Canvas -->
+      <div class="canvas-wrapper">
+        <canvas #snakeCanvas
+          [width]="canvasSize"
+          [height]="canvasSize"
+          class="game-canvas"
+          tabindex="0"
+        ></canvas>
+
+        <!-- Superposición de Fin de Juego -->
+        @if (isGameOver()) {
+          <div class="game-over-overlay">
+            <h2 class="game-over-title">¡Juego Terminado!</h2>
+            <p class="game-over-score">Puntuación Final: <span class="score-final-value">{{ score() }}</span></p>
+            <button (click)="newGame()" class="game-over-button">
+              Jugar de Nuevo
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- Controles Móviles (solo visibles en pantallas pequeñas) -->
+      <div class="mobile-controls">
+        <p class="controls-label">Controles (o usa las flechas del teclado)</p>
+        <!-- Arriba -->
+        <button (click)="changeDirection('up')" class="dir-button up">&#9650;</button>
+        <div class="dir-row">
+          <!-- Izquierda -->
+          <button (click)="changeDirection('left')" class="dir-button left">&#9664;</button>
+          <!-- Abajo -->
+          <button (click)="changeDirection('down')" class="dir-button down">&#9660;</button>
+          <!-- Derecha -->
+          <button (click)="changeDirection('right')" class="dir-button right">&#9654;</button>
+        </div>
+      </div>
+
+    </div>
+  </div>

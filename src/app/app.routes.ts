@@ -12,6 +12,11 @@ export const routes: Routes = [
         path: 'juegos/:id',
         loadComponent: () => import('./views/juego/juego.component').then(m => m.JuegoComponent),
     },
+    {
+        path: 'games',
+        loadChildren: () => import('./modules/games/games.module').then(m => m.GamesModule),
+        canActivate: [isLoggedIn],
+    },
     { 
         path: 'login',
         loadComponent: () => import('./views/login-view/login-view.component').then(m => m.LoginViewComponent)
