@@ -72,6 +72,19 @@
             </div>
         </div>  
     }
+    @else if(gameState === 'gameover'){
+        <section id="gameover" class="screen screen-gameover">
+            <h1>¡Fin del Juego!</h1>
+            <h2>Estadísticas de tu partida</h2>
+            <p>
+                Respuestas totales: <strong>{{ stats.totalRespuestas }}</strong><br>
+                Aciertos: <strong>{{ stats.aciertos }}</strong><br>
+                Racha máxima: <strong>{{ stats.rachaMaxima }}</strong><br>
+                Puntaje máximo: <strong>{{ stats.puntajeMaximo }}</strong>
+            </p>
+            <button (click)="ResetGame()">Volver al Inicio</button>
+        </section>
+    }
 </div>
 
 

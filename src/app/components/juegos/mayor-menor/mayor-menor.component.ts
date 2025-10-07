@@ -25,6 +25,13 @@ export class MayorMenorComponent {
     pozo: 0
   };
 
+  stats = {
+    totalRespuestas: 0,
+    aciertos: 0,
+    rachaMaxima: 0,
+    puntajeMaximo: 0
+  };
+
   message: string | null = null;
   messageTimeout: any = null;
 
@@ -404,6 +411,12 @@ export class MayorMenorComponent {
     this.run.pozo = this.run.apuesta * this.run.racha;
     this.run.banca += this.run.pozo;
 
+    // Update stats
+    this.stats.aciertos++;
+    this.stats.totalRespuestas++;
+    this.stats.rachaMaxima = Math.max(this.stats.rachaMaxima, this.run.racha);
+    this.stats.puntajeMaximo = Math.max(this.stats.puntajeMaximo, this.run.pozo);
+
     // Show "Ganaste" message
     this.showMessage(`Ganaste ${this.run.pozo} puntos`);
   }
@@ -411,11 +424,34 @@ export class MayorMenorComponent {
   ReiniciarRacha(){
     if(this.run.banca < this.run.apuesta){
       console.log('Fin del juego');
+      this.gameState = 'gameover';
+      return;
     }
     this.run.racha = 0;
 
+    // Update stats
+    this.stats.totalRespuestas++;
+
     // Show "Perdiste" message
     this.showMessage(`Perdiste ${this.run.apuesta} puntos`);
+  }
+
+  ResetGame() {
+    this.gameState = 'start';
+    this.run = {
+      banca: 100,
+      apuesta: 20,
+      racha: 0,
+      pozo: 0
+    };
+    this.stats = {
+      totalRespuestas: 0,
+      aciertos: 0,
+      rachaMaxima: 0,
+      puntajeMaximo: 0
+    };
+    this.mazo = [];
+    this.GenerarMazo();
   }
 
   showMessage(msg: string) {
