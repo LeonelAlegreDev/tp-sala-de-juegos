@@ -6,7 +6,7 @@ import { PokemonService } from '../../../services/pokemon.service';
 @Component({
   selector: 'app-preguntados',
   standalone: true,
-  imports: [NgFor, NgStyle],
+  imports: [ NgStyle],
   templateUrl: './preguntados.component.html',
   styleUrls: ['./preguntados.component.css']
 })
@@ -133,6 +133,11 @@ export class PreguntadosComponent {
     }, duracion);
   }
 
+  Responder(){
+    this.gameState = this.gameStateList[2]; // respondiendo
+    this.CrearPreguntaPokemon();
+  }
+
   CrearPreguntaPokemon(){
     const result = this.pokemonService.GetPokemons();
     this.pregunta.consigna = "¿Como se llama este pokemon?";
@@ -206,6 +211,12 @@ export class PreguntadosComponent {
       console.log("Fin del juego");
       this.modalData.header = '¡Fin del juego!';
       this.modalData.body = `Respondiste ${this.run.preguntasAcertadas} preguntas correctamente y obtuviste ${this.run.puntos} puntos.`;
+      this.run.vidas = 3;
+      this.run.puntos = 0;
+      this.run.racha = 0;
+      this.run.maxRacha = 0;
+      this.run.preguntasAcertadas = 0;
+      this.run.preguntasRespondidas = 0;
       this.modalData.nextState = this.gameStateList[0]; // start
       this.modalData.buttonText = 'Volver al inicio';
       this.MostrarModal();

@@ -1,7 +1,7 @@
 <div id="viewport" #viewport>
     <!-- MODAL -->
     <div class="modal" (click)="onModalClick($event)" #modal>
-        <div class="card">
+        <div id="modal_card">
             <h2>{{ modalData.header }}</h2>
             <p>{{ modalData.body }}</p>
             <button (click)="Continuar()">{{ modalData.buttonText }}</button>
@@ -9,49 +9,22 @@
     </div>
     @if(gameState === 'start'){
         <section class="screen screen-start">
-            <h1>Preguntados</h1>
-            <h2>¡Pon a prueba tus conocimientos!</h2>
+            <h1>¿Cuál es ese Pokemon?</h1>
+            <h2>¡Conviértete en un Maestro Pokémon!</h2>
             <p>
-                ¿Crees que sabes mucho? ¡Demuéstralo! 
+                Pon a prueba tu habilidad para reconocer pokemones de todas las regiones y descubre qué tan bien conoces la Pokédex. 
                 <br>
-                Responde preguntas de diferentes categorías y 
-                niveles de dificultad. 
+                Con cada Pokémon que logres identificar, ¡estarás más cerca de ser el mejor entrenador!
                 <br>
-                <strong>¿Lograrás responder todas las preguntas?</strong>
+                <strong>¿Lograrás adivinarlos todos?</strong>
             </p>
             <button (click)="Start()">Jugar</button>
         </section>
     }
     @else{
         <section class="screen screen-playing">
-            <div class='roulette-wrapper'>
-                <div class='selector' #selector></div>
-                <div class='wheel' #wheel>
-                    <div class="row" #row>
-                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
-                        [attr.data-categoria]="tarjeta.categoria" 
-                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
-                        </div>
-                    </div>
-                    <div class="row" #row>
-                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
-                        [attr.data-categoria]="tarjeta.categoria" 
-                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
-                        </div>
-                    </div>
-                    <div class="row" #row>
-                        <div #card class="card" *ngFor="let tarjeta of tarjetas;" 
-                        [attr.data-categoria]="tarjeta.categoria" 
-                        [ngStyle]="{'background-image': 'url('+ tarjeta.imgUrl+ ')'}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             @if(gameState === 'girando'){
                 <section class="container spin-screen">
-                    <h1 class="categoria">{{ run.categoria }}</h1>
-
                     <div id="info">
                         <div class="field">
                             <h2>Puntos:</h2>
@@ -81,13 +54,12 @@
                     </div>
                     
                     <div id="buttonContainer">
-                        <button (click)="SpinWheel()" [disabled]="!canSpin">Spin Wheel</button>
+                        <button (click)="Responder()" [disabled]="!canSpin">Siguiente Pregunta</button>
                     </div>                    
                 </section>
             }
             @else if (gameState === 'respondiendo') {
                 <section class="container answer-screen">
-                    <h1>{{ run.categoria }}</h1>
                     <div class="pregunta">
                         @if(pregunta.img !== ''){
                           <h2>{{ pregunta.consigna }}</h2>

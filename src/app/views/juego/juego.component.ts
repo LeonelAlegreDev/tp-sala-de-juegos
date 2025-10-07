@@ -21,7 +21,7 @@ export class JuegoComponent {
   @ViewChild('vcr', { read: ViewContainerRef }) vcr!: ViewContainerRef;
   
   componentList = [AhorcadoComponent, MayorMenorComponent, PreguntadosComponent, SpaceInvadersComponent];
-  juegosList = ["Ahorcado", "MayorMenor", "Preguntados", "SpaceInvaders"];
+  juegosList = ["Ahorcado", "MayorMenor", "pokemon", "SpaceInvaders"];
 
   private viewportReady$: Observable<boolean>;
   private resizeObserver: ResizeObserver;
