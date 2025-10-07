@@ -70,11 +70,12 @@ export class LoginViewComponent {
         this.router.navigate(['/juegos']);
       }
       catch (error: any) {
-        if(error.message === "Credenciales invalidas"){
-          this.form_error = error.message;
+        if(error.code === "auth/invalid-credential"){
+          this.form_error = "Error, credenciales invalidas";
         }
         else this.form_error = "Error al iniciar sesion";
-        console.log(error.message);
+        
+        this.isLoading = false;
       }
     }
     else {
