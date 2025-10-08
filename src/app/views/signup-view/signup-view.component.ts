@@ -3,19 +3,19 @@ import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormsModule, ReactiveFormsModule, 
          Validators, FormControl } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/i-user';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup-view',
   standalone: true,
-  imports: [RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './signup-view.component.html',
   styleUrl: './signup-view.component.css'
 })
 export class SignupViewComponent {
   private authService = inject(AuthService);
-  private userService = inject(UserService);
+  // private userService = inject(UserService);
   
   form!: FormGroup;
   email_error = '';
@@ -74,7 +74,7 @@ export class SignupViewComponent {
         
         this.form_error = '';
         console.log("Usuario creado con exito");
-        this.router.navigate(['/home']);
+        this.router.navigate(['/juegos']);
       }
       catch (error: any) {
         if(error.message === "Credenciales invalidas" || 
