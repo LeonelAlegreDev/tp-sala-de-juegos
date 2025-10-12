@@ -1,9 +1,10 @@
-.card{
+.card {
     position: relative;
     display: flex;
     width: calc(655px / 4);
     height: calc(930px / 4);
 }
+
 .card__face {
     position: absolute;
     height: 100%;
@@ -13,28 +14,32 @@
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
+
 .card__face--front {
     border-radius: 20px;
     background-size: cover;
     transform: rotateY(180deg);
 }
+
 .card__face--back {
     background-size: cover;
-    background-image: url("../../../../assets/images/mayor-menor/cards/back-card-1.png"); 
+    background-image: url("../../../../assets/images/mayor-menor/cards/back-card-1.png");
     border-radius: 20px;
     border-left: 1px solid rgb(255, 255, 255);
-} 
+}
+
 #rotate {
     position: absolute;
     bottom: 0;
 }
-#hide{
+
+#hide {
     position: absolute;
     bottom: -20px;
 }
 
 
-#viewport{
+#viewport {
     width: 1000px;
     height: 1000px;
     min-width: 1000px;
@@ -46,17 +51,18 @@
 
     background-color: rgb(165, 165, 165);
 
-    .row{
+    .row {
         width: 100%;
     }
-    .row-puntos{
+
+    .row-puntos {
         height: 18%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
-        #puntos-container{
+
+        #puntos-container {
             width: 40%;
             padding: 0 2px;
             display: flex;
@@ -64,14 +70,15 @@
             justify-content: center;
             align-items: center;
             background-color: rgba(0, 0, 0, 0.3);
-        
-            #puntos-total{
+
+            #puntos-total {
                 font-size: 4.5em;
                 font-family: "Handjet-Bold";
-                color: yellow; /* TODO: CAMBIAR VARIABLE*/
+                color: yellow;
+                /* TODO: CAMBIAR VARIABLE*/
             }
 
-            .modificador{
+            .modificador {
                 display: flex;
                 flex-direction: row;
                 text-align: center;
@@ -82,23 +89,26 @@
                 font-family: "Handjet-Bold";
                 width: 100%;
 
-                #base{
+                #base {
                     width: 15%;
-                    color: rgb(0, 174, 255); /* TODO: cambiar variable*/
+                    color: rgb(0, 174, 255);
+                    /* TODO: cambiar variable*/
                 }
 
-                .operador{
+                .operador {
                     width: 15%;
                     color: rgb(0, 245, 102);
                 }
-                #producto{
+
+                #producto {
                     width: 15%;
                     color: red;
                 }
             }
         }
     }
-    .row-cards{
+
+    .row-cards {
         height: 40%;
         display: flex;
         flex-direction: column;
@@ -106,7 +116,7 @@
         align-items: center;
         border: none;
 
-        .cards-container{
+        .cards-container {
             width: calc((655px / 4 + 60px) * 2 * 1.2);
             height: calc(930px / 4);
             display: flex;
@@ -114,11 +124,11 @@
             justify-content: space-between;
         }
 
-        .mazo{
+        .mazo {
             position: absolute;
             height: calc(930px / 4);
             width: calc(655px / 4 + 60px);
-    
+
             display: flex;
             flex-direction: row;
             overflow: show;
@@ -127,14 +137,15 @@
             transform: translateX(-50%); */
         }
     }
-    .row-buttons{
+
+    .row-buttons {
         height: 13%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
-        #buttons-container{
+        #buttons-container {
             width: 50%;
             height: 70%;
             display: flex;
@@ -143,12 +154,14 @@
             justify-content: space-around;
             text-align: center;
 
-            .odds, .producto{
+            .odds,
+            .producto {
                 width: 20%;
                 font-family: "Handjet-Bold";
                 font-size: 2.5em;
             }
-            .boton{
+
+            .boton {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -165,24 +178,27 @@
                 box-shadow: 0 0 10px 2px rgb(0, 0, 0) inset;
 
             }
-            .odds{
+
+            .odds {
                 color: rgb(0, 245, 102);
                 opacity: 1;
                 display: none;
             }
-            .producto{
+
+            .producto {
                 color: red;
             }
         }
     }
-    .row-banca{
+
+    .row-banca {
         height: 20%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        #banca-container{
+        #banca-container {
             width: 40%;
             padding: 0 2px;
             display: flex;
@@ -191,26 +207,29 @@
             align-items: center;
             background-color: rgba(0, 0, 0, 0.3);
 
-            #banca-total{
+            #banca-total {
                 font-size: 4.5em;
                 font-family: "Handjet-Bold";
-                color: yellow; /* TODO: CAMBIAR VARIABLE*/
+                color: yellow;
+                /* TODO: CAMBIAR VARIABLE*/
             }
-            #banca-title{
+
+            #banca-title {
                 font-size: 3em;
                 font-family: "Handjet-Bold";
                 color: rgb(0, 245, 102);
             }
         }
     }
-    .row-apuesta{
+
+    .row-apuesta {
         height: 9%;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
 
-        span{
+        span {
             height: 98%;
             width: auto;
             display: flex;
@@ -230,82 +249,101 @@
 .showFront {
     animation: showFront 1s linear forwards;
 }
+
 .hideFront {
     animation: hideFront 1s linear forwards;
 }
-.showBack{
+
+.showBack {
     animation: showBack 1s linear forwards;
 }
-.hideBack{
+
+.hideBack {
     animation: hideBack 1s linear forwards;
 }
+
 @keyframes showFront {
     from {
         transform: rotateY(180deg) translateX(0);
     }
-    to{
+
+    to {
         transform: rotateY(360deg) translateX(140%);
     }
-    0%{
+
+    0% {
         scale: 1;
     }
-    50%{
+
+    50% {
         scale: 1.2;
     }
 }
+
 @keyframes hideFront {
     from {
         transform: rotateY(0);
         /* transform: translateX(0); */
     }
-    to{
+
+    to {
         transform: rotateY(-180deg);
         /* transform: translateX(100%); */
     }
-    0%{
+
+    0% {
         scale: 1;
     }
-    50%{
+
+    50% {
         scale: 1.2;
     }
 }
 
 @keyframes showBack {
-    from{
+    from {
         transform: rotateY(180deg);
         /* transform: translateX(0); */
     }
-    to{
+
+    to {
         transform: rotateY(360deg);
         /* transform: translateX(100%); */
 
     }
-    0%{
+
+    0% {
         scale: 1;
     }
-    50%{
+
+    50% {
         scale: 1.2;
     }
 }
+
 @keyframes hideBack {
     from {
         transform: rotateY(0) translateX(0);
     }
-    to{
+
+    to {
         transform: rotateY(180deg) translateX(-140%);
     }
-    0%{
+
+    0% {
         scale: 1;
     }
-    50%{
+
+    50% {
         scale: 1.2;
     }
-    100%{
+
+    100% {
         scale: 1;
     }
 }
 
-#welcome{
+#welcome {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -314,23 +352,25 @@
     width: 100%;
     padding: 0 4%;
 
-    h1{
+    h1 {
         font-size: 5em;
         font-family: "Handjet-Bold";
         color: black;
     }
-    h2{
+
+    h2 {
         font-size: 3em;
         font-family: "Handjet-Bold";
         color: black;
     }
-    p{
+
+    p {
         font-size: 2.5em;
         font-family: "Handjet-Regular";
         color: black;
     }
 
-    button{
+    button {
         border: none;
         color: black;
         font-family: "Handjet-Bold";
@@ -344,62 +384,77 @@
 }
 
 /* Style for the message */
-.row-message{
+.row-message {
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 50px;
 }
+
 .message {
-  font-family: 'Handjet-Bold'; /* Replace 'Arial' with the font used in the template */
-  font-size: 30px;
-  font-weight: bold;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-align: center;
-  width: 250px;
+    font-family: 'Handjet-Bold';
+    /* Replace 'Arial' with the font used in the template */
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 250px;
 }
 
 /* Style for the gameover screen */
 .screen-gameover {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  padding: 0 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 4%;
 }
 
 .screen-gameover h1 {
-  font-size: 5em;
-  font-family: "Handjet-Bold";
-  color: black;
+    font-size: 6em;
+    font-family: "Handjet-Bold";
+    color: black;
 }
 
 .screen-gameover h2 {
-  font-size: 3em;
-  font-family: "Handjet-Bold";
-  color: black;
+    font-size: 4em;
+    font-family: "Handjet-Bold";
+    color: black;
 }
 
-.screen-gameover p {
-  font-size: 2.5em;
-  font-family: "Handjet-Regular";
-  color: black;
-  text-align: center;
+.screen-gameover .puntuacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 3em;
+    font-family: "Handjet-Regular";
+    color: black;
+    text-align: left;
+    list-style: none;
+    width: 80%;
+
+    li {
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .screen-gameover button {
-  border: none;
-  color: black;
-  font-family: "Handjet-Bold";
-  font-size: 3em;
-  padding: 10px 50px;
-  border-radius: 50px;
-  box-shadow: 0 0 10px 2px rgb(0, 0, 0);
-  background-color: var(--primary-color);
-  cursor: pointer;
+    border: none;
+    color: black;
+    font-family: "Handjet-Bold";
+    font-size: 3em;
+    padding: 10px 50px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px 2px rgb(0, 0, 0);
+    background-color: var(--primary-color);
+    cursor: pointer;
 }

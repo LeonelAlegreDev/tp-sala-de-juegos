@@ -22,14 +22,11 @@ export class MayorMenorComponent {
     banca: 100,
     apuesta: 20,
     racha: 0,
-    pozo: 0
-  };
-
-  stats = {
+    pozo: 0,
     totalRespuestas: 0,
     aciertos: 0,
-    rachaMaxima: 0,
-    puntajeMaximo: 0
+    mejorRacha: 0,
+    puntaje: 0
   };
 
   message: string | null = null;
@@ -37,13 +34,7 @@ export class MayorMenorComponent {
 
   ngOnInit(): void {
     this.GenerarMazo();
-  console.log(this.gameState)
-  }
-
-  ngAfterViewInit() {
-    // Observa si ocurren cambios en los elemenots cartas
-    // this.cardElements.changes.subscribe((changedObj) => {
-    // });
+    console.log(this.gameState)
   }
 
   private GenerarMazo(): void {
@@ -91,9 +82,9 @@ export class MayorMenorComponent {
         }
         const url = relative_path + file_start + file_card + 'white' + '.png';
 
-        this.mazo.push({ 
-          valor: valores[j], 
-          palo: palos[i], 
+        this.mazo.push({
+          valor: valores[j],
+          palo: palos[i],
           frontImg: url,
           descartada: false
         });
@@ -117,20 +108,19 @@ export class MayorMenorComponent {
     }, 2000);
   }
 
-
   AcomodarMazo(i: number): string {
-    const grupo = Math.floor(i / 3); 
+    const grupo = Math.floor(i / 3);
     let transform = i * - 100 + grupo * 2;
-    
+
     return transform + '%';
   }
 
-  async MostrarCarta(index: number, cantDescartadas: number){
+  async MostrarCarta(index: number, cantDescartadas: number) {
     const card = this.cardElements.get(index)?.nativeElement;
     const frontFace = card.querySelector('.card__face--front');
     const backFace = card.querySelector('.card__face--back');
 
-    card.style.zIndex =  `${cantDescartadas}`;
+    card.style.zIndex = `${cantDescartadas}`;
 
     frontFace.classList.remove('hideFront');
     frontFace.classList.add('showFront');
@@ -141,27 +131,29 @@ export class MayorMenorComponent {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
-  OcultarCarta(){
+  OcultarCarta() {
     const frontFace = this.cardElements.last.nativeElement.querySelector('.card__face--front');
     const backFace = this.cardElements.last.nativeElement.querySelector('.card__face--back');
-    
+
     frontFace.classList.remove('showFront');
     frontFace.classList.add('hideFront');
-    
-    backFace.classList.remove('hideBack');    
-    backFace.classList.add('showBack');  
+
+    backFace.classList.remove('hideBack');
+    backFace.classList.add('showBack');
   }
 
-  async RobarCarta(apuesta: string){
+  async RobarCarta(apuesta: string) {
     let cartaRobada = null;
     let cartaPrevia = null;
     let cantDescartadas = 0;
-    
-    if(this.run.banca < this.run.apuesta){
+
+    // Valida si hay suficiente dinero para apostar
+    if (this.run.banca < this.run.apuesta) {
       console.log('No tienes suficiente dinero para apostar');
       return;
     }
 
+    // Busca la última carta no descartada en el mazo
     for (let i = this.mazo.length - 1; i >= 0; i--) {
       if (!this.mazo[i].descartada) {
         cartaRobada = this.mazo[i];
@@ -172,9 +164,9 @@ export class MayorMenorComponent {
     }
 
     // Valida si hay cartas para robar
-    if(cartaRobada){      
+    if (cartaRobada) {
       // Valida si hay una carta previa
-      if(cartaPrevia){
+      if (cartaPrevia) {
         this.CalcularApuesta(apuesta, cartaPrevia, cartaRobada);
       }
       else console.log('No hay carta previa');
@@ -185,21 +177,21 @@ export class MayorMenorComponent {
     else console.log('No hay cartas para robar');
   }
 
-  CalcularApuesta(apuesta: string, cartaPrevia: any, cartaRobada: any){
-    if(this.run.banca < this.run.apuesta){
+  CalcularApuesta(apuesta: string, cartaPrevia: any, cartaRobada: any) {
+    if (this.run.banca < this.run.apuesta) {
       console.log('No tienes suficiente dinero para apostar');
       return;
     }
     this.run.banca -= this.run.apuesta;
 
-    switch(cartaRobada.valor){
+    switch (cartaRobada.valor) {
       case 'A':
-        if(cartaPrevia.valor === 'A'){
+        if (cartaPrevia.valor === 'A') {
           this.Empatar();
           break;
         }
-        else if(cartaPrevia.valor === 'K'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'K') {
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -207,8 +199,8 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'Q'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'Q') {
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -216,8 +208,8 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'J'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'J') {
+          if (apuesta === 'mayor') {
             console.log('Perdiste, la carta robada es A y la anterior es J');
             this.ReiniciarRacha();
           }
@@ -228,7 +220,7 @@ export class MayorMenorComponent {
           break;
         }
         else {
-          if(apuesta === 'mayor'){
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -236,10 +228,9 @@ export class MayorMenorComponent {
           }
           break;
         }
-
       case 'K':
-        if(cartaPrevia.valor === 'A'){
-          if(apuesta === 'mayor'){
+        if (cartaPrevia.valor === 'A') {
+          if (apuesta === 'mayor') {
             this.SumarPuntos(cartaRobada.valor);
           }
           else {
@@ -247,58 +238,56 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'K'){
-          this.Empatar();          
-          break;
-        }
-        else if(cartaPrevia.valor === 'Q'){
-          if(apuesta === 'mayor'){
-            this.SumarPuntos(cartaRobada.valor);
-          }
-          else this.ReiniciarRacha();
-          break;
-        }
-        else if(cartaPrevia.valor === 'J'){
-          if(apuesta === 'mayor'){
-            this.SumarPuntos(cartaRobada.valor);
-          }
-          else this.ReiniciarRacha();
-          break;
-        }
-        else {
-          if(apuesta === 'mayor'){
-            this.SumarPuntos(cartaRobada.valor);
-          }
-          else this.ReiniciarRacha();
-          break;
-        }
-
-        /// seguir
-      case 'Q':
-        if(cartaPrevia.valor === 'A'){
-          if(apuesta === 'mayor'){
-            this.SumarPuntos(cartaRobada.valor);
-          }
-          else {
-            this.ReiniciarRacha();
-          }
-          break;
-        }
-        else if(cartaPrevia.valor === 'K'){
-          if(apuesta === 'mayor'){
-            this.ReiniciarRacha();
-          }
-          else {
-            this.SumarPuntos(cartaRobada.valor);
-          }
-          break;
-        }
-        else if(cartaPrevia.valor === 'Q'){
+        else if (cartaPrevia.valor === 'K') {
           this.Empatar();
           break;
         }
-        else if(cartaPrevia.valor === 'J'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'Q') {
+          if (apuesta === 'mayor') {
+            this.SumarPuntos(cartaRobada.valor);
+          }
+          else this.ReiniciarRacha();
+          break;
+        }
+        else if (cartaPrevia.valor === 'J') {
+          if (apuesta === 'mayor') {
+            this.SumarPuntos(cartaRobada.valor);
+          }
+          else this.ReiniciarRacha();
+          break;
+        }
+        else {
+          if (apuesta === 'mayor') {
+            this.SumarPuntos(cartaRobada.valor);
+          }
+          else this.ReiniciarRacha();
+          break;
+        }
+      case 'Q':
+        if (cartaPrevia.valor === 'A') {
+          if (apuesta === 'mayor') {
+            this.SumarPuntos(cartaRobada.valor);
+          }
+          else {
+            this.ReiniciarRacha();
+          }
+          break;
+        }
+        else if (cartaPrevia.valor === 'K') {
+          if (apuesta === 'mayor') {
+            this.ReiniciarRacha();
+          }
+          else {
+            this.SumarPuntos(cartaRobada.valor);
+          }
+          break;
+        }
+        else if (cartaPrevia.valor === 'Q') {
+          this.Empatar();
+          break;
+        }
+        else if (cartaPrevia.valor === 'J') {
+          if (apuesta === 'mayor') {
             this.SumarPuntos(cartaRobada.valor);
           }
           else {
@@ -307,7 +296,7 @@ export class MayorMenorComponent {
           break;
         }
         else {
-          if(apuesta === 'mayor'){
+          if (apuesta === 'mayor') {
             console.log('Ganaste, la carta robada es Q y la anterior es ' + cartaPrevia.valor);
           }
           else {
@@ -315,10 +304,9 @@ export class MayorMenorComponent {
           }
           break;
         };
-      
       case 'J':
-        if(cartaPrevia.valor === 'A'){
-          if(apuesta === 'mayor'){
+        if (cartaPrevia.valor === 'A') {
+          if (apuesta === 'mayor') {
             this.SumarPuntos(cartaRobada.valor);
           }
           else {
@@ -326,8 +314,8 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'K'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'K') {
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -335,8 +323,8 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'Q'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'Q') {
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -344,12 +332,12 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else if(cartaPrevia.valor === 'J'){
+        else if (cartaPrevia.valor === 'J') {
           this.Empatar();
           break;
         }
         else {
-          if(apuesta === 'mayor'){
+          if (apuesta === 'mayor') {
             this.SumarPuntos(cartaRobada.valor);
           }
           else {
@@ -358,19 +346,19 @@ export class MayorMenorComponent {
           break;
         }
       default:
-        if(cartaPrevia.valor === 'A'){
-          if(apuesta === 'mayor'){
-            console.log('Ganaste, la carta robada es ' + cartaRobada.valor +' y la anterior es A');
+        if (cartaPrevia.valor === 'A') {
+          if (apuesta === 'mayor') {
+            console.log('Ganaste, la carta robada es ' + cartaRobada.valor + ' y la anterior es A');
             this.SumarPuntos(cartaRobada.valor);
           }
           else {
-            console.log('Perdiste, la carta robada es ' + cartaRobada.valor +' y la anterior es A');
+            console.log('Perdiste, la carta robada es ' + cartaRobada.valor + ' y la anterior es A');
             this.ReiniciarRacha();
           }
           break;
         }
-        else if(cartaPrevia.valor === 'K' || cartaPrevia.valor === 'Q' || cartaPrevia.valor === 'J'){
-          if(apuesta === 'mayor'){
+        else if (cartaPrevia.valor === 'K' || cartaPrevia.valor === 'Q' || cartaPrevia.valor === 'J') {
+          if (apuesta === 'mayor') {
             this.ReiniciarRacha();
           }
           else {
@@ -378,12 +366,12 @@ export class MayorMenorComponent {
           }
           break;
         }
-        else{
-          if(apuesta === 'mayor'){
-            if(Number(cartaRobada.valor) > Number(cartaPrevia.valor)){
+        else {
+          if (apuesta === 'mayor') {
+            if (Number(cartaRobada.valor) > Number(cartaPrevia.valor)) {
               this.SumarPuntos(cartaRobada.valor);
             }
-            else if(Number(cartaPrevia.valor) === Number(cartaRobada.valor)){
+            else if (Number(cartaPrevia.valor) === Number(cartaRobada.valor)) {
               this.Empatar();
             }
             else {
@@ -391,10 +379,10 @@ export class MayorMenorComponent {
             }
           }
           else {
-            if(Number(cartaRobada.valor) < Number(cartaPrevia.valor)){
+            if (Number(cartaRobada.valor) < Number(cartaPrevia.valor)) {
               this.SumarPuntos(cartaRobada.valor);
             }
-            else if(Number(cartaPrevia.valor) === Number(cartaRobada.valor)){
+            else if (Number(cartaPrevia.valor) === Number(cartaRobada.valor)) {
               this.Empatar();
             }
             else {
@@ -406,52 +394,26 @@ export class MayorMenorComponent {
     }
   }
 
-  SumarPuntos(valor: string){
+  SumarPuntos(valor: string) {
     this.run.racha++;
     this.run.pozo = this.run.apuesta * this.run.racha;
     this.run.banca += this.run.pozo;
-
-    // Update stats
-    this.stats.aciertos++;
-    this.stats.totalRespuestas++;
-    this.stats.rachaMaxima = Math.max(this.stats.rachaMaxima, this.run.racha);
-    this.stats.puntajeMaximo = Math.max(this.stats.puntajeMaximo, this.run.pozo);
 
     // Show "Ganaste" message
     this.showMessage(`Ganaste ${this.run.pozo} puntos`);
   }
 
-  ReiniciarRacha(){
-    if(this.run.banca < this.run.apuesta){
+  ReiniciarRacha() {
+    // Check for game over
+    if (this.run.banca < this.run.apuesta) {
+
       console.log('Fin del juego');
-      this.gameState = 'gameover';
-      return;
+      this.gameState = this.gameStateList[2];
     }
     this.run.racha = 0;
 
-    // Update stats
-    this.stats.totalRespuestas++;
-
     // Show "Perdiste" message
     this.showMessage(`Perdiste ${this.run.apuesta} puntos`);
-  }
-
-  ResetGame() {
-    this.gameState = 'start';
-    this.run = {
-      banca: 100,
-      apuesta: 20,
-      racha: 0,
-      pozo: 0
-    };
-    this.stats = {
-      totalRespuestas: 0,
-      aciertos: 0,
-      rachaMaxima: 0,
-      puntajeMaximo: 0
-    };
-    this.mazo = [];
-    this.GenerarMazo();
   }
 
   showMessage(msg: string) {
@@ -469,7 +431,7 @@ export class MayorMenorComponent {
     }, 2000);
   }
 
-  Empatar(){
+  Empatar() {
     this.ReiniciarRacha();
   }
 
@@ -497,5 +459,21 @@ export class MayorMenorComponent {
       mazoMezclado[i] = this.mazo[indiceOriginal];
     }
     this.mazo = mazoMezclado;
+  }
+
+  ResetGame(): void {
+    // Reinicia el juego
+    this.run.banca = 100;
+    this.run.apuesta = 20;
+    this.run.racha = 0;
+    this.run.pozo = 0;
+    this.run.totalRespuestas = 0;
+    this.run.aciertos = 0;
+    this.run.mejorRacha = 0;
+    this.run.puntaje = 0;
+
+    this.gameState = this.gameStateList[0];
+    this.mazo.forEach(card => card.descartada = false);
+    this.MezclarMazo();
   }
 }

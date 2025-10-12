@@ -15,14 +15,21 @@ export class ProfileComponent {
   private router = inject(Router);
   userEmail = "ejemplo@email.com";
 
+  constructor() {
+  }
+
+  async nGOnInit(): Promise<void> {
+    console.log('ProfileComponent initialized');
+  }
+
   async Logout() {
     await this.authService.Logout()
-    .then(() => {
-      console.log('Usuario desconectado');
-      this.router.navigate(['/welcome']);
-    })
-    .catch((e) => {
-      console.error("Error al desconectar el usuario", e);
-    });
+      .then(() => {
+        console.log('Usuario desconectado');
+        this.router.navigate(['/welcome']);
+      })
+      .catch((e) => {
+        console.error("Error al desconectar el usuario", e);
+      });
   }
 }
