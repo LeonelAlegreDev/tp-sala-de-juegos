@@ -1,4 +1,4 @@
-#viewport{
+#viewport {
     height: 1000px;
     min-width: 1000px;
     min-height: 1000px;
@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.screen{
+.screen {
     width: 100%;
     height: 100%;
     display: flex;
@@ -17,7 +17,7 @@
     align-items: center;
     background-color: rgb(255, 150, 150);
 
-    button{
+    button {
         width: 250px;
         border: none;
         color: black;
@@ -31,39 +31,47 @@
         transition: 0.5s;
     }
 
-    button:hover{
+    button:hover {
         color: var(--primary-color);
         background-color: black;
     }
 }
-.screen-start{
+
+.screen-start {
     padding: 0 6%;
     text-align: center;
 
-    h1{
+    h1 {
         font-size: 5em;
         font-family: "Handjet-Bold";
         color: black;
     }
-    h2{
+
+    h2 {
         font-size: 3em;
         font-family: "Handjet-Bold";
         color: black;
     }
-    p{
+
+    p {
         font-size: 2.5em;
         font-family: "Handjet-Regular";
         color: black;
     }
+
+    button {
+        width: fit-content;
+    }
 }
-.screen-playing{
+
+.screen-playing {
     justify-content: space-between;
     background-image: url('../../../../assets/images/ahorcado/playing-background.jpg');
     background-size: 229% 105%;
     background-position: 50% bottom;
 
-    
-    #palabra{
+
+    #palabra {
         height: 80px;
         width: 80%;
         margin-top: 20px;
@@ -76,11 +84,12 @@
         font-size: 3em;
         background-color: rgba(0, 0, 0, 0.3);
 
-        span{
+        span {
             margin: 5px;
         }
     }
-    #teclado{
+
+    #teclado {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -92,14 +101,14 @@
 
         background-color: rgba(0, 0, 0, 0.5);
 
-        .row{
+        .row {
             width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: center;
             margin-top: 10px;
-        
-            .letra{
+
+            .letra {
                 width: 75px;
                 height: 75px;
                 display: flex;
@@ -114,34 +123,42 @@
                 background-color: rgb(183, 183, 183);
                 transition: 0.5s;
             }
-            .letra:last-child{
+
+            .letra:last-child {
                 margin-right: 10px;
             }
-            .letra:hover{
+
+            .letra:hover {
                 background-color: rgb(255, 255, 255);
             }
-            .adivinada{
+
+            .adivinada {
                 background-color: rgb(48, 250, 159);
                 opacity: 0.75;
             }
-            .adivinada:hover{
+
+            .adivinada:hover {
                 background-color: rgb(48, 250, 159);
                 cursor: default;
             }
-            .equivocada{
+
+            .equivocada {
                 background-color: rgb(255, 88, 88);
                 opacity: 0.75;
             }
-            .equivocada:hover{
+
+            .equivocada:hover {
                 background-color: rgb(255, 88, 88);
                 cursor: default;
             }
         }
-        .row:last-child{
+
+        .row:last-child {
             margin-bottom: 10px;
         }
     }
-    #character{
+
+    #character {
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -152,13 +169,14 @@
 
         top: 31.5%;
         right: 21.8%;
-        
-        img{
+
+        img {
             width: calc(590px / 4.7);
             height: calc(910px / 4.2);
             position: absolute;
         }
-        #soga{
+
+        #soga {
             width: 40px;
             height: 45px;
             z-index: 2;
@@ -167,23 +185,28 @@
             border-radius: 100%;
             border: 5px solid rgb(2, 182, 71);
         }
-        svg{
+
+        svg {
             z-index: 3;
             width: 65px;
             transform: translateY(-15px);
         }
-        svg path{
+
+        svg path {
             fill: rgb(117, 53, 255);
         }
-        .part{
+
+        .part {
             opacity: 0.2;
         }
-        .visible{
+
+        .visible {
             opacity: 1;
         }
     }
 }
-.screen-end{
+
+.screen-end {
     position: absolute;
     width: auto;
     height: 60%;
@@ -192,21 +215,29 @@
     color: var(--light-color);
     background-color: rgba(0, 0, 0, 0.5);
 
-    h1{
+    h1 {
         font-size: 5em;
         font-family: "Handjet-Bold";
         color: var(--light-color);
     }
-    h2{
+
+    h2 {
         font-size: 3em;
         font-family: "Handjet-Bold";
         color: var(--light-color);
     }
-    button:hover{
+
+    button:hover {
         box-shadow: 0 0 10px 2px var(--light-color);
     }
+
+    span {
+        font-size: 2.5em;
+        font-family: "Handjet-Regular";
+    }
 }
-.screen-dificult{
+
+.screen-dificult {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -215,8 +246,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    h1{
+
+    h1 {
         height: 25%;
         display: flex;
         flex-direction: column;
@@ -227,19 +258,64 @@
         color: black;
     }
 
-    .column{
+    .column {
         height: 75%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
-        button{
+        button {
             margin: 30px;
         }
     }
 
 }
-.hidden{
+
+.screen-score {
+    h1 {
+        font-size: 5em;
+    }
+
+    button {
+        width: fit-content;
+    }
+
+    .best-score {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 40px;
+
+    }
+
+    thead th {
+        background-color: #007bff;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 3px solid #0056b3;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Hover effect */
+    tbody tr:hover {
+        background-color: #e9e9e9;
+        transition: background-color 0.3s ease;
+    }
+}
+
+.hidden {
     display: none;
 }
