@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MenuComponent],
+  imports: [MenuComponent, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -14,12 +15,9 @@ export class ProfileComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   userEmail = "ejemplo@email.com";
+  user$ = this.authService.user$;
 
   constructor() {
-  }
-
-  async nGOnInit(): Promise<void> {
-    console.log('ProfileComponent initialized');
   }
 
   async Logout() {

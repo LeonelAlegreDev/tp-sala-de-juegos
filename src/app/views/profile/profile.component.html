@@ -1,16 +1,13 @@
 <app-menu></app-menu>
 
 <div class="profile-container">
-    
+
     <h1>Mí Perfil</h1>
     <!-- Foto de perfil -->
-    <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
-         alt="Foto de perfil"
-         class="profile-photo"
-         draggable="false">
+    <img src="../../../assets/images/default-profile.jpeg" alt="Foto de perfil" class="profile-photo" draggable="false">
 
     <!-- Email del usuario -->
-    <p class="profile-email">{{ userEmail }}</p>
+    <p class="profile-email">{{ (user$ | async)?.email }}</p>
 
     <!-- Botón de Logout -->
     <button (click)="Logout()" class="logout-button">Logout</button>
