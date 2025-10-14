@@ -29,7 +29,20 @@ export class AhorcadoComponent {
     partesPersonaje: {} as any,
     letrasUsadas: [] as string[],
     result: '',
+    dificultadRonda: '',
+    puntaje: 0,
+    puntajeRonda: 0,
   };
+  puntajesPorLetraAdivinada = {
+    facil: 1,
+    medio: 2,
+    dificil: 3
+  }
+  factorPorPalabraAdivinada = {
+    facil: 1,
+    medio: 1.5,
+    dificil: 2
+  }
   palabrasFacil = ['GATO', 'CASA', 'PAIS', 'CIELO', 'AGUA', 'PERRO', 'MESA', 'LUNA', 'BARCO', 'CAMION'];
   palabrasMedio = ['CARACOL', 'LIBRO', 'PLANTA', 'ESCUELA', 'PELOTA', 'MUSICA', 'FUTBOL', 'LLUVIA', 'TORMENTA', 'GALAXIA'];
   palabrasDificil = ['UNIVERSO', 'MURCIELAGO', 'HORIZONTE', 'COMPUTADORA', 'EXTRAORDINARIO', 'HELICOPTERO', 'ELECTRONICA', 'CIENTIFICO'];
@@ -68,7 +81,8 @@ export class AhorcadoComponent {
       }
 
       if (adivinada) {
-        // Marca el elemento como adivinado       
+        // Marca el elemento como adivinado     
+        this.run.puntajeRonda += this.puntajesPorLetraAdivinada[this.run.dificultadRonda as keyof typeof this.puntajesPorLetraAdivinada];
         for (let i = 0; i < this.letraElements.length; i++) {
           if (this.letraElements.toArray()[i].nativeElement.innerText === letra) {
             this.letraElements.toArray()[i].nativeElement.classList.add('adivinada');
@@ -77,6 +91,8 @@ export class AhorcadoComponent {
         }
 
         if (esGanador) {
+          this.run.puntajeRonda = Math.floor(this.run.puntajeRonda * this.factorPorPalabraAdivinada[this.run.dificultadRonda as keyof typeof this.factorPorPalabraAdivinada]);
+          this.run.puntaje += this.run.puntajeRonda;
           this.gameState = this.gameStateList[2]; // end
           this.run.result = 'win';
           console.log("Ganaste");
@@ -97,6 +113,7 @@ export class AhorcadoComponent {
         if (this.run.vidas === 0) {
           this.gameState = this.gameStateList[2]; // end
           this.run.result = 'lose';
+          this.run.dificultadRonda = '';
           console.log("Fin del juego");
         }
       }
@@ -107,9 +124,12 @@ export class AhorcadoComponent {
   }
 
   ElegirPalabra(dificultad: string) {
-    document.getElementsByClassName('screen-dificult').item(0)!.classList.add('hidden');
     let palabra_array = [];
     let palabraElegida: string = "DEFAULT";
+    this.run.dificultadRonda = dificultad;
+    this.run.puntajeRonda = 0;
+    this.run.vidas = 6;
+    this.run.letrasUsadas = [];
 
     switch (dificultad) {
       case 'facil':
@@ -149,6 +169,9 @@ export class AhorcadoComponent {
     this.run.palabra = [];
     this.run.letras = [];
     this.run.result = '';
+    this.run.dificultadRonda = '';
+    this.run.puntaje = 0;
+    this.run.puntajeRonda = 0;
     this.screenEnd.nativeElement.classList.add('hidden');
     this.letraElements.forEach((letra) => {
       letra.nativeElement.classList.remove('adivinada');

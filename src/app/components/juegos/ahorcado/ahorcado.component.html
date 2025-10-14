@@ -77,11 +77,12 @@
 
         @if(run.result === 'win'){
         <h2>¡Felicidades! ¡Has adivinado la palabra!</h2>
-        <span>Puntuación: <strong>1234</strong></span>
+        <span>Puntuación: <strong>{{ run.puntaje }}</strong></span>
         <button (click)="Continuar()">Continuar</button>
         }
         @else if(run.result === 'lose'){
         <h2>¡Oh no! ¡Has sido ahorcado!</h2>
+        <span>Puntuación: <strong>{{ run.puntaje }}</strong></span>
         <button (click)="Restart()">Jugar de nuevo</button>
         }
     </section>
