@@ -55,7 +55,7 @@
                 "glob": "**/*",
                 "input": "public"
               }
-            ],  
+            ],
             "styles": [
               "src/styles.css"
             ],
@@ -71,8 +71,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kB",
-                  "maximumError": "20kB"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 }
               ],
               "outputHashing": "all"

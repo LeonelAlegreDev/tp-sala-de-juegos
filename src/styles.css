@@ -1,17 +1,20 @@
-:root{
+:root {
     --background-color: #1c4a2c;
     --primary-color: #4bdf80;
     --secondary-color: #2e3575;
     --accent-color: #936cc4;
     --light-color: #ebf7f0;
     --menu-height: 60px;
+    --dark-color: #1b6936;
 }
-*{
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     height: 100vh;
     background-color: var(--background-color);
 }
@@ -20,6 +23,7 @@ body{
     font-family: 'Handjet-Regular';
     src: url('./assets/fonts/Handjet/static/Handjet-Regular.ttf');
 }
+
 @font-face {
     font-family: 'Handjet-Bold';
     src: url('./assets/fonts/Handjet/static/Handjet-Bold.ttf');
