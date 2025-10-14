@@ -51,12 +51,12 @@ export class AuthService {
 
   async Signup(email: string, password: string): Promise<void> {
     await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
-    .then((userCredentials) => {
-      console.log("Usuario registrado en Firebase Auth");
+      .then((userCredentials) => {
+        console.log("Usuario registrado en Firebase Auth");
         return userCredentials.user.uid;
-    })
-    .catch((e) =>{
-      console.error(e);
-    });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 }

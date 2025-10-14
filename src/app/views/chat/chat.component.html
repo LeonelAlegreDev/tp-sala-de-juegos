@@ -14,20 +14,16 @@
         <div id="chat-window">
             <h2>Chat: Sala General</h2>
             <div id="messages">
-                <div class="message">
-                    <span class="username">Usuario 1</span>
-                    <span class="text">Hola a todos!</span>
-                    <span class="timestamp">13:30 14/10/2025</span>
-                </div>
-                <div class="message user">
-                    <span class="username">Usuario 2</span>
-                    <span class="text">¡Hola! ¿Cómo estás?</span>
-                    <span class="timestamp">13:40 14/10/2025</span>
+                <div *ngFor="let mensaje of (messages$ | async)" class="message"
+                    [ngClass]="{'user': mensaje.idEmisor === (usuarioActual$ | async)?.uid}">
+                    <span class="username">{{ mensaje.email }}</span>
+                    <span class="text">{{ mensaje.mensaje }}</span>
+                    <span class="timestamp">{{ mensaje.fecha | date: 'HH:mm dd/MM/yy' }}</span>
                 </div>
             </div>
             <div id="message-input">
-                <input type="text" placeholder="Escribe tu mensaje..." />
-                <button>Enviar</button>
+                <input type="text" [formControl]="nuevoMensaje" placeholder="Escribe tu mensaje..." />
+                <button (click)="enviarMensaje()">Enviar</button>
             </div>
         </div>
     </div>
