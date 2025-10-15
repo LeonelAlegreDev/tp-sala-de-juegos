@@ -1,10 +1,13 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { IPuntaje, ScoreService } from '../../../services/score.service';
+import { AuthService } from '../../../services/auth.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-ahorcado',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, CommonModule],
   templateUrl: './ahorcado.component.html',
   styleUrl: './ahorcado.component.css'
 })
@@ -14,6 +17,8 @@ export class AhorcadoComponent {
   @ViewChild('character') characterElement!: ElementRef;
   @ViewChildren('character') characterElements!: QueryList<ElementRef>;
   @ViewChildren('part') partElements!: QueryList<ElementRef>;
+
+  constructor(private scroreService: ScoreService, private authService: AuthService) { }
 
   gameStateList = ['start', 'playing', 'end', 'score', 'dificulty'];
   gameState = this.gameStateList[0];
@@ -37,26 +42,59 @@ export class AhorcadoComponent {
     facil: 1,
     medio: 2,
     dificil: 3
-  }
+  };
   factorPorPalabraAdivinada = {
     facil: 1,
     medio: 1.5,
     dificil: 2
-  }
+  };
   palabrasFacil = ['GATO', 'CASA', 'PAIS', 'CIELO', 'AGUA', 'PERRO', 'MESA', 'LUNA', 'BARCO', 'CAMION'];
   palabrasMedio = ['CARACOL', 'LIBRO', 'PLANTA', 'ESCUELA', 'PELOTA', 'MUSICA', 'FUTBOL', 'LLUVIA', 'TORMENTA', 'GALAXIA'];
   palabrasDificil = ['UNIVERSO', 'MURCIELAGO', 'HORIZONTE', 'COMPUTADORA', 'EXTRAORDINARIO', 'HELICOPTERO', 'ELECTRONICA', 'CIENTIFICO'];
+
+  puntajes: any[] = []; // Array para almacenar los puntajes obtenidos
+  mejorPuntajeUsuario: number = 0; // Variable para almacenar el mejor puntaje del usuario actual
+
+  ngOnInit(): void {
+    this.cargarPuntajes(); // Cargar los puntajes al iniciar el componente
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.scroreService.obtenerMejorPuntajePorUsuario(user.uid).subscribe(puntaje => {
+          this.mejorPuntajeUsuario = puntaje?.puntaje || 0;
+        });
+      }
+    });
+  }
+
+  cargarPuntajes(): void {
+    this.scroreService.obtenerPuntajes().subscribe({
+      next: (data) => {
+        // Ordenar los puntajes de mayor a menor y tomar solo los primeros 5
+        this.puntajes = data
+          .sort((a: IPuntaje, b: IPuntaje) => b.puntaje - a.puntaje)
+          .slice(0, 5);
+        console.log('Puntajes cargados y ordenados:', this.puntajes);
+      },
+      error: (err) => {
+        console.error('Error al cargar los puntajes:', err);
+      }
+    });
+  }
+
+  guardarPuntaje(puntaje: IPuntaje) {
+    this.scroreService.guardarPuntaje(puntaje);
+  }
 
   Start() {
     console.log("Juego iniciado");
     this.gameState = this.gameStateList[4]; // dificulty
     this.InitCharacter();
   }
-  Adivinar(letra: string) {
+
+  async Adivinar(letra: string) {
     if (this.run.vidas > 0) {
       let adivinada = false;
       let esGanador = true;
-
 
       // Valida si la letra ya fue usada
       for (let j = 0; j < this.run.letrasUsadas.length; j++) {
@@ -69,24 +107,21 @@ export class AhorcadoComponent {
 
       // Comprueba si se ha adivinado la letra
       for (let i = 0; i < this.run.palabra.length - 1; i++) {
-        //Valida si la letra ingresada es igual a la letra de la palabra
         if (this.run.palabra[i].valor === letra) {
           this.run.palabra[i].adivinada = true;
           adivinada = true;
         }
-        // Si no hay letras por adivinar, el jugador gana
         if (!this.run.palabra[i].adivinada) {
           esGanador = false;
         }
       }
 
       if (adivinada) {
-        // Marca el elemento como adivinado     
         this.run.puntajeRonda += this.puntajesPorLetraAdivinada[this.run.dificultadRonda as keyof typeof this.puntajesPorLetraAdivinada];
         for (let i = 0; i < this.letraElements.length; i++) {
           if (this.letraElements.toArray()[i].nativeElement.innerText === letra) {
             this.letraElements.toArray()[i].nativeElement.classList.add('adivinada');
-            break
+            break;
           }
         }
 
@@ -97,12 +132,11 @@ export class AhorcadoComponent {
           this.run.result = 'win';
           console.log("Ganaste");
         }
-      }
-      else {
+      } else {
         for (let i = 0; i < this.letraElements.length; i++) {
           if (this.letraElements.toArray()[i].nativeElement.innerText === letra) {
             this.letraElements.toArray()[i].nativeElement.classList.add('equivocada');
-            break
+            break;
           }
         }
 
@@ -111,14 +145,45 @@ export class AhorcadoComponent {
         this.MostrarParte();
 
         if (this.run.vidas === 0) {
+          const nuevoPuntaje = this.run.puntaje;
+
+          // Actualizar mejor puntaje del usuario si es necesario
+          if (nuevoPuntaje > this.mejorPuntajeUsuario) {
+            this.mejorPuntajeUsuario = nuevoPuntaje;
+          }
+
+          // Agregar el puntaje actual a la lista de puntajes
+          this.puntajes.push({
+            idUsuario: 'currentUser', // Placeholder, replace with actual user ID if available
+            email: 'currentUserEmail', // Placeholder, replace with actual user email if available
+            puntaje: nuevoPuntaje
+          });
+
+          // Ordenar y mantener solo los 5 mejores puntajes
+          this.puntajes = this.puntajes
+            .sort((a, b) => b.puntaje - a.puntaje)
+            .slice(0, 5);
+
+          // Guardar el puntaje en la base de datos
+          try {
+            const user = await firstValueFrom(this.authService.user$);
+            const puntaje: IPuntaje = {
+              idUsuario: user?.uid || 'unknown',
+              email: user?.email || 'unknown',
+              puntaje: nuevoPuntaje
+            };
+            await this.scroreService.guardarPuntaje(puntaje);
+          } catch (error) {
+            console.error('Error al guardar el puntaje en la base de datos:', error);
+          }
+
           this.gameState = this.gameStateList[2]; // end
           this.run.result = 'lose';
           this.run.dificultadRonda = '';
           console.log("Fin del juego");
         }
       }
-    }
-    else {
+    } else {
       console.log("No te quedan vidas");
     }
   }
@@ -162,7 +227,17 @@ export class AhorcadoComponent {
     this.gameState = this.gameStateList[4]; // dificulty
     this.run.letrasUsadas = [];
     this.run.palabra = [];
+    this.run.vidas = 6;
+
+    // Reiniciar visibilidad de las partes del personaje
+    this.partElements.forEach((part) => {
+      part.nativeElement.classList.remove('visible');
+    });
+
+    // Reinicializar las partes del personaje
+    this.InitCharacter();
   }
+
   Restart() {
     this.gameState = this.gameStateList[0]; // start
     this.run.vidas = 6;
@@ -172,7 +247,7 @@ export class AhorcadoComponent {
     this.run.dificultadRonda = '';
     this.run.puntaje = 0;
     this.run.puntajeRonda = 0;
-    this.screenEnd.nativeElement.classList.add('hidden');
+
     this.letraElements.forEach((letra) => {
       letra.nativeElement.classList.remove('adivinada');
     });
@@ -180,6 +255,14 @@ export class AhorcadoComponent {
       letra.nativeElement.classList.remove('equivocada');
     });
     this.run.letrasUsadas = [];
+
+    // Reiniciar visibilidad de las partes del personaje
+    this.partElements.forEach((part) => {
+      part.nativeElement.classList.remove('visible');
+    });
+
+    // Reinicializar las partes del personaje
+    this.InitCharacter();
   }
 
   MostrarParte() {
@@ -226,6 +309,7 @@ export class AhorcadoComponent {
       return;
     }
 
+    // Reinicializar el estado de las partes del personaje
     this.run.partesPersonaje = {
       cabeza: { elemento: this.partElements.get(0)!, visible: false },
       sombrero: { elemento: this.partElements.get(1)!, visible: false },
@@ -235,9 +319,15 @@ export class AhorcadoComponent {
       piernaIzq: { elemento: this.partElements.get(5)!, visible: false },
       piernaDer: { elemento: this.partElements.get(6)!, visible: false }
     };
+
+    // Asegurarse de que todas las partes estén ocultas inicialmente
+    this.partElements.forEach((part) => {
+      part.nativeElement.classList.remove('visible');
+    });
   }
 
   VerPuntuacion() {
     this.gameState = this.gameStateList[3]; // score
   }
 }
+

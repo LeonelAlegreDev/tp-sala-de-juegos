@@ -88,9 +88,8 @@
     </section>
     }
     @else if(gameState === 'score'){
-    <section class="screen screen-score">
+    <section class="screen screen-score" *ngIf="gameState === 'score'">
         <h1>Tabla de Puntajes</h1>
-
         <table>
             <thead>
                 <tr>
@@ -100,34 +99,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>JugadorEstrella</td>
-                    <td>15000</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>GamerPro_23</td>
-                    <td>12850</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Silv3rBullet</td>
-                    <td>10900</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>XPert</td>
-                    <td>9500</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>ElRayo</td>
-                    <td>8200</td>
+                <tr *ngFor="let puntaje of puntajes; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ puntaje.email }}</td>
+                    <td>{{ puntaje.puntaje }}</td>
                 </tr>
             </tbody>
         </table>
-        <span class="best-score">Tu mejor puntaje: <strong>3221</strong></span>
+        <span>Tú mejor puntaje: <strong>{{ mejorPuntajeUsuario }}</strong></span>
         <button (click)="Restart()">Volver al inicio</button>
     </section>
     }
